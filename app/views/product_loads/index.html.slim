@@ -1,0 +1,27 @@
+h1 Listing product_loads
+
+table
+  thead
+    tr
+      th Local product
+      th Vending machine
+      th Total pours
+      th Date loaded
+      th
+      th
+      th
+
+  tbody
+    - @product_loads.each do |product_load|
+      tr
+        td = product_load.local_product
+        td = product_load.vending_machine
+        td = product_load.total_pours
+        td = product_load.date_loaded
+        td = link_to 'Show', product_load
+        td = link_to 'Edit', edit_product_load_path(product_load)
+        td = link_to 'Destroy', product_load, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Product load', new_product_load_path

@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Product:
+  = @local_product.product
+p
+  strong Brewery:
+  = @local_product.brewery
+p
+  strong Region:
+  = @local_product.region
+
+= link_to 'Edit', edit_local_product_path(@local_product)
+'|
+= link_to 'Back', local_products_path

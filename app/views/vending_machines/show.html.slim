@@ -1,0 +1,24 @@
+p#notice = notice
+
+p
+  strong Model:
+  = @vending_machine.model
+p
+  strong Firmware version:
+  = @vending_machine.firmware_version
+p
+  strong Location:
+  = @vending_machine.location
+p
+  strong Route:
+  = @vending_machine.route
+p
+  strong Owner:
+  = @vending_machine.owner
+p
+  strong Last serviced:
+  = @vending_machine.last_serviced
+
+= link_to 'Edit', edit_vending_machine_path(@vending_machine)
+'|
+= link_to 'Back', vending_machines_path

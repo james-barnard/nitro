@@ -1,6 +1,7 @@
 doctype html
-html
+html lang="en"
   head
+    meta charset="utf-8"
     meta[name="viewport" content="width=device-width, initial-scale=1.0"]
     title
       = content_for?(:title) ? yield(:title) : 'Nitro'
@@ -8,9 +9,17 @@ html
     == stylesheet_link_tag "application", :media => 'all'
     == javascript_include_tag 'application'
     == csrf_meta_tags
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
   body
     header
       == render 'layouts/navigation'
     main[role="main"]
-      == render 'layouts/messages'
-      == yield
+      .container-fluid
+        .row
+          .col-md-2
+            == render 'layouts/side_nav'
+          .col-md-10
+            == render 'layouts/messages'
+            == yield

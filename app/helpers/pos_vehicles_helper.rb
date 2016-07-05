@@ -1,0 +1,2 @@
+module PosVehiclesHelper
+end

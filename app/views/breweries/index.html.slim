@@ -1,0 +1,25 @@
+h1 Listing breweries
+
+table
+  thead
+    tr
+      th Region
+      th Name
+      th Person
+      th
+      th
+      th
+
+  tbody
+    - @breweries.each do |brewery|
+      tr
+        td = brewery.region
+        td = brewery.name
+        td = brewery.person
+        td = link_to 'Show', brewery
+        td = link_to 'Edit', edit_brewery_path(brewery)
+        td = link_to 'Destroy', brewery, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Brewery', new_brewery_path

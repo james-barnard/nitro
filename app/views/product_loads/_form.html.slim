@@ -1,0 +1,11 @@
+= simple_form_for(@product_load) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :local_product
+    = f.association :vending_machine
+    = f.input :total_pours
+    = f.input :date_loaded
+
+  .form-actions
+    = f.button :submit

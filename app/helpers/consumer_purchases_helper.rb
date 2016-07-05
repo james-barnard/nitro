@@ -1,0 +1,2 @@
+module ConsumerPurchasesHelper
+end

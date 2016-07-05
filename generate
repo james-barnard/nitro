@@ -1,0 +1,30 @@
+rails d scaffold brewery
+rails d scaffold consumer
+rails d scaffold consumer_purchase
+rails d scaffold local_product
+rails d scaffold location
+rails d scaffold organization
+rails d scaffold owner
+rails d scaffold pos_vehicle
+rails d scaffold person
+rails d scaffold product
+rails d scaffold product_load
+rails d scaffold region
+rails d scaffold route
+rails d scaffold route_driver
+rails d scaffold vending_machine
+
+rails g scaffold location name:string address_1:string address_2:string city:string state:string postal_code:string --no_stylesheets
+rails g scaffold organization name:string cell_phone:string office_phone:string location:references --no_stylesheets
+rails g scaffold region name:string description:string --no_stylesheets
+rails g scaffold person name:string cell_phone:string office_phone:string location:references organization:references --no_stylesheets
+rails g scaffold brewery region:references name:string person:references --no_stylesheets
+rails g scaffold consumer name:string --no_stylesheets
+rails g scaffold pos_vehicle name:string access_code:string url:string --no_stylesheets
+rails g scaffold product name:string description:string --no_stylesheets
+rails g scaffold local_product product:references brewery:references region:references --no_stylesheets
+rails g scaffold owner name:string cell_phone:string office_phone:string location:references organization:references --no_stylesheets
+rails g scaffold route name:string description:string --no_stylesheets
+rails g scaffold vending_machine model:string firmware_version:string location:references route:references owner:string last_serviced:timestamp --no_stylesheets
+rails g scaffold product_load local_product:references vending_machine:references total_pours:integer date_loaded:timestamp --no_stylesheets
+rails g scaffold consumer_purchase consumer:references pos_vehicle:references product_load:references --no_stylesheets

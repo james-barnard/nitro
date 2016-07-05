@@ -1,0 +1,10 @@
+= simple_form_for(@brewery) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :region
+    = f.input :name
+    = f.association :person
+
+  .form-actions
+    = f.button :submit

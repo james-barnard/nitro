@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Local product:
+  = @product_load.local_product
+p
+  strong Vending machine:
+  = @product_load.vending_machine
+p
+  strong Total pours:
+  = @product_load.total_pours
+p
+  strong Date loaded:
+  = @product_load.date_loaded
+
+= link_to 'Edit', edit_product_load_path(@product_load)
+'|
+= link_to 'Back', product_loads_path

@@ -1,0 +1,9 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @consumer.name
+
+= link_to 'Edit', edit_consumer_path(@consumer)
+'|
+= link_to 'Back', consumers_path

@@ -1,0 +1,25 @@
+h1 Listing consumer_purchases
+
+table
+  thead
+    tr
+      th Consumer
+      th Pos vehicle
+      th Product load
+      th
+      th
+      th
+
+  tbody
+    - @consumer_purchases.each do |consumer_purchase|
+      tr
+        td = consumer_purchase.consumer
+        td = consumer_purchase.pos_vehicle
+        td = consumer_purchase.product_load
+        td = link_to 'Show', consumer_purchase
+        td = link_to 'Edit', edit_consumer_purchase_path(consumer_purchase)
+        td = link_to 'Destroy', consumer_purchase, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Consumer purchase', new_consumer_purchase_path

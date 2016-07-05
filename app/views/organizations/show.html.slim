@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @organization.name
+p
+  strong Cell phone:
+  = @organization.cell_phone
+p
+  strong Office phone:
+  = @organization.office_phone
+p
+  strong Location:
+  = @organization.location
+
+= link_to 'Edit', edit_organization_path(@organization)
+'|
+= link_to 'Back', organizations_path

@@ -11,10 +11,140 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160704015914) do
+ActiveRecord::Schema.define(version: 20160705011125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "breweries", force: :cascade do |t|
+    t.integer  "region_id"
+    t.string   "name"
+    t.integer  "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "breweries", ["person_id"], name: "index_breweries_on_person_id", using: :btree
+  add_index "breweries", ["region_id"], name: "index_breweries_on_region_id", using: :btree
+
+  create_table "consumer_purchases", force: :cascade do |t|
+    t.integer  "consumer_id"
+    t.integer  "pos_vehicle_id"
+    t.integer  "product_load_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "consumer_purchases", ["consumer_id"], name: "index_consumer_purchases_on_consumer_id", using: :btree
+  add_index "consumer_purchases", ["pos_vehicle_id"], name: "index_consumer_purchases_on_pos_vehicle_id", using: :btree
+  add_index "consumer_purchases", ["product_load_id"], name: "index_consumer_purchases_on_product_load_id", using: :btree
+
+  create_table "consumers", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "local_products", force: :cascade do |t|
+    t.integer  "product_id"
+    t.integer  "brewery_id"
+    t.integer  "region_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "local_products", ["brewery_id"], name: "index_local_products_on_brewery_id", using: :btree
+  add_index "local_products", ["product_id"], name: "index_local_products_on_product_id", using: :btree
+  add_index "local_products", ["region_id"], name: "index_local_products_on_region_id", using: :btree
+
+  create_table "locations", force: :cascade do |t|
+    t.string   "name"
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "postal_code"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.string   "name"
+    t.string   "cell_phone"
+    t.string   "office_phone"
+    t.integer  "location_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "organizations", ["location_id"], name: "index_organizations_on_location_id", using: :btree
+
+  create_table "owners", force: :cascade do |t|
+    t.string   "name"
+    t.string   "cell_phone"
+    t.string   "office_phone"
+    t.integer  "location_id"
+    t.integer  "organization_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "owners", ["location_id"], name: "index_owners_on_location_id", using: :btree
+  add_index "owners", ["organization_id"], name: "index_owners_on_organization_id", using: :btree
+
+  create_table "people", force: :cascade do |t|
+    t.string   "name"
+    t.string   "cell_phone"
+    t.string   "office_phone"
+    t.integer  "location_id"
+    t.integer  "organization_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "people", ["location_id"], name: "index_people_on_location_id", using: :btree
+  add_index "people", ["organization_id"], name: "index_people_on_organization_id", using: :btree
+
+  create_table "pos_vehicles", force: :cascade do |t|
+    t.string   "name"
+    t.string   "access_code"
+    t.string   "url"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "product_loads", force: :cascade do |t|
+    t.integer  "local_product_id"
+    t.integer  "vending_machine_id"
+    t.integer  "total_pours"
+    t.datetime "date_loaded"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "product_loads", ["local_product_id"], name: "index_product_loads_on_local_product_id", using: :btree
+  add_index "product_loads", ["vending_machine_id"], name: "index_product_loads_on_vending_machine_id", using: :btree
+
+  create_table "products", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "regions", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "routes", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -36,4 +166,35 @@ ActiveRecord::Schema.define(version: 20160704015914) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "vending_machines", force: :cascade do |t|
+    t.string   "model"
+    t.string   "firmware_version"
+    t.integer  "location_id"
+    t.integer  "route_id"
+    t.string   "owner"
+    t.datetime "last_serviced"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "vending_machines", ["location_id"], name: "index_vending_machines_on_location_id", using: :btree
+  add_index "vending_machines", ["route_id"], name: "index_vending_machines_on_route_id", using: :btree
+
+  add_foreign_key "breweries", "people"
+  add_foreign_key "breweries", "regions"
+  add_foreign_key "consumer_purchases", "consumers"
+  add_foreign_key "consumer_purchases", "pos_vehicles"
+  add_foreign_key "consumer_purchases", "product_loads"
+  add_foreign_key "local_products", "breweries"
+  add_foreign_key "local_products", "products"
+  add_foreign_key "local_products", "regions"
+  add_foreign_key "organizations", "locations"
+  add_foreign_key "owners", "locations"
+  add_foreign_key "owners", "organizations"
+  add_foreign_key "people", "locations"
+  add_foreign_key "people", "organizations"
+  add_foreign_key "product_loads", "local_products"
+  add_foreign_key "product_loads", "vending_machines"
+  add_foreign_key "vending_machines", "locations"
+  add_foreign_key "vending_machines", "routes"
 end

@@ -1,0 +1,25 @@
+h1 Listing local_products
+
+table
+  thead
+    tr
+      th Product
+      th Brewery
+      th Region
+      th
+      th
+      th
+
+  tbody
+    - @local_products.each do |local_product|
+      tr
+        td = local_product.product
+        td = local_product.brewery
+        td = local_product.region
+        td = link_to 'Show', local_product
+        td = link_to 'Edit', edit_local_product_path(local_product)
+        td = link_to 'Destroy', local_product, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Local product', new_local_product_path

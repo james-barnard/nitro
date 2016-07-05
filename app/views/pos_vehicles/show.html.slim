@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @pos_vehicle.name
+p
+  strong Access code:
+  = @pos_vehicle.access_code
+p
+  strong Url:
+  = @pos_vehicle.url
+
+= link_to 'Edit', edit_pos_vehicle_path(@pos_vehicle)
+'|
+= link_to 'Back', pos_vehicles_path

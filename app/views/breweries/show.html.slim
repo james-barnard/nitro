@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Region:
+  = @brewery.region
+p
+  strong Name:
+  = @brewery.name
+p
+  strong Person:
+  = @brewery.person
+
+= link_to 'Edit', edit_brewery_path(@brewery)
+'|
+= link_to 'Back', breweries_path

@@ -1,0 +1,31 @@
+.container-fluid
+  .row
+    h1 Vending Machines
+    .column
+      table class="table" id="vending_machines"
+        thead
+          tr
+            th Owner
+            th Route
+            th Location
+            th Model
+            th Firmware Version
+            th Last Serviced
+            th
+            th
+            th
+        tbody
+          - @vending_machines.each do |vending_machine|
+            tr
+              td = vending_machine.owner
+              td = vending_machine.route
+              td = vending_machine.location
+              td = vending_machine.model
+              td = vending_machine.firmware_version
+              td = vending_machine.last_serviced
+              td = link_to 'Show', vending_machine
+              td = link_to 'Edit', edit_vending_machine_path(vending_machine)
+              td = link_to 'Destroy', vending_machine, data: { confirm: 'Are you sure?' }, method: :delete
+        br
+
+        = link_to 'New Vending machine', new_vending_machine_path

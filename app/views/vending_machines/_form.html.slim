@@ -1,0 +1,13 @@
+= simple_form_for(@vending_machine) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :model
+    = f.input :firmware_version
+    = f.association :location
+    = f.association :route
+    = f.input :owner
+    = f.input :last_serviced
+
+  .form-actions
+    = f.button :submit

@@ -1,0 +1,25 @@
+h1 Listing pos_vehicles
+
+table
+  thead
+    tr
+      th Name
+      th Access code
+      th Url
+      th
+      th
+      th
+
+  tbody
+    - @pos_vehicles.each do |pos_vehicle|
+      tr
+        td = pos_vehicle.name
+        td = pos_vehicle.access_code
+        td = pos_vehicle.url
+        td = link_to 'Show', pos_vehicle
+        td = link_to 'Edit', edit_pos_vehicle_path(pos_vehicle)
+        td = link_to 'Destroy', pos_vehicle, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Pos vehicle', new_pos_vehicle_path

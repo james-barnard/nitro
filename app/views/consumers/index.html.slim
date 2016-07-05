@@ -1,0 +1,21 @@
+h1 Listing consumers
+
+table
+  thead
+    tr
+      th Name
+      th
+      th
+      th
+
+  tbody
+    - @consumers.each do |consumer|
+      tr
+        td = consumer.name
+        td = link_to 'Show', consumer
+        td = link_to 'Edit', edit_consumer_path(consumer)
+        td = link_to 'Destroy', consumer, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Consumer', new_consumer_path

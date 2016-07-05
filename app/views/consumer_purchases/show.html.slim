@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Consumer:
+  = @consumer_purchase.consumer
+p
+  strong Pos vehicle:
+  = @consumer_purchase.pos_vehicle
+p
+  strong Product load:
+  = @consumer_purchase.product_load
+
+= link_to 'Edit', edit_consumer_purchase_path(@consumer_purchase)
+'|
+= link_to 'Back', consumer_purchases_path
