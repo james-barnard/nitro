@@ -2,25 +2,24 @@
   .row
     h1 Routes
     .column
-
-    table
-      thead
-        tr
-          th Name
-          th Description
-          th
-          th
-          th
-
-      tbody
-        - @routes.each do |route|
+      table class="table" id="routes"
+        thead
           tr
-            td = route.name
-            td = route.description
-            td = link_to 'Show', route
-            td = link_to 'Edit', edit_route_path(route)
-            td = link_to 'Destroy', route, data: { confirm: 'Are you sure?' }, method: :delete
+            th Name
+            th Description
+            th
+            th
+            th
+
+        tbody
+          - @routes.each do |route|
+            tr
+              td = route.name
+              td = route.description
+              td = link_to 'Show', route
+              td = link_to 'Edit', edit_route_path(route)
+              td = link_to 'Destroy', route, data: { confirm: 'Are you sure?' }, method: :delete
 
     br
 
-    = link_to 'New Route', new_route_path
+  = link_to 'New', new_route_path

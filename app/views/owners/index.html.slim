@@ -1,29 +1,31 @@
-h1 Listing owners
+.container-fluid
+  .row
+    h1 Owners
+    .column
+      table class="table" id="owners"
+        thead
+          tr
+            th Name
+            th Cell phone
+            th Office phone
+            th Location
+            th Organization
+            th
+            th
+            th
 
-table
-  thead
-    tr
-      th Name
-      th Cell phone
-      th Office phone
-      th Location
-      th Organization
-      th
-      th
-      th
+        tbody
+          - @owners.each do |owner|
+            tr
+              td = owner.name
+              td = owner.cell_phone
+              td = owner.office_phone
+              td = owner.location
+              td = owner.organization
+              td = link_to 'Show', owner
+              td = link_to 'Edit', edit_owner_path(owner)
+              td = link_to 'Destroy', owner, data: { confirm: 'Are you sure?' }, method: :delete
 
-  tbody
-    - @owners.each do |owner|
-      tr
-        td = owner.name
-        td = owner.cell_phone
-        td = owner.office_phone
-        td = owner.location
-        td = owner.organization
-        td = link_to 'Show', owner
-        td = link_to 'Edit', edit_owner_path(owner)
-        td = link_to 'Destroy', owner, data: { confirm: 'Are you sure?' }, method: :delete
+      br
 
-br
-
-= link_to 'New Owner', new_owner_path
+  = link_to 'New', new_owner_path

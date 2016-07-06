@@ -1,23 +1,25 @@
-h1 Listing regions
+.container-fluid
+  .row
+    h1 Regions
+    .column
+      table class="table" id="regions"
+        thead
+          tr
+            th Name
+            th Description
+            th
+            th
+            th
 
-table
-  thead
-    tr
-      th Name
-      th Description
-      th
-      th
-      th
+        tbody
+          - @regions.each do |region|
+            tr
+              td = region.name
+              td = region.description
+              td = link_to 'Show', region
+              td = link_to 'Edit', edit_region_path(region)
+              td = link_to 'Destroy', region, data: { confirm: 'Are you sure?' }, method: :delete
 
-  tbody
-    - @regions.each do |region|
-      tr
-        td = region.name
-        td = region.description
-        td = link_to 'Show', region
-        td = link_to 'Edit', edit_region_path(region)
-        td = link_to 'Destroy', region, data: { confirm: 'Are you sure?' }, method: :delete
+        br
 
-br
-
-= link_to 'New Region', new_region_path
+  = link_to 'New', new_region_path

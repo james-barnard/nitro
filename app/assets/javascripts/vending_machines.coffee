@@ -2,4 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 jQuery ->
-  $('#vending_machines').dataTable()
+  $('#vending_machines').dataTable(
+    columnDefs: [ targets: [-3, -2, -1], orderable: false ]
+)

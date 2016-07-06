@@ -1,27 +1,29 @@
-h1 Listing organizations
+.container-fluid
+  .row
+    h1 Organizations
+    .column
+      table class="table" id="organizations"
+        thead
+          tr
+            th Name
+            th Cell phone
+            th Office phone
+            th Location
+            th
+            th
+            th
 
-table
-  thead
-    tr
-      th Name
-      th Cell phone
-      th Office phone
-      th Location
-      th
-      th
-      th
+        tbody
+          - @organizations.each do |organization|
+            tr
+              td = organization.name
+              td = organization.cell_phone
+              td = organization.office_phone
+              td = organization.location
+              td = link_to 'Show', organization
+              td = link_to 'Edit', edit_organization_path(organization)
+              td = link_to 'Destroy', organization, data: { confirm: 'Are you sure?' }, method: :delete
 
-  tbody
-    - @organizations.each do |organization|
-      tr
-        td = organization.name
-        td = organization.cell_phone
-        td = organization.office_phone
-        td = organization.location
-        td = link_to 'Show', organization
-        td = link_to 'Edit', edit_organization_path(organization)
-        td = link_to 'Destroy', organization, data: { confirm: 'Are you sure?' }, method: :delete
+      br
 
-br
-
-= link_to 'New Organization', new_organization_path
+  = link_to 'New', new_organization_path
