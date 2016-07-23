@@ -15,5 +15,3 @@
 //= require dataTables/jquery.dataTables
 //= require bootstrap-sprockets
 //= require_tree .
-jQuery ->
-  $('#current_data_table').dataTable()
