@@ -1,4 +1,5 @@
 class VendingMachinesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_vending_machine, only: [:show, :edit, :update, :destroy]
 
   # GET /vending_machines

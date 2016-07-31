@@ -1,4 +1,5 @@
 class ConsumerPurchasesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_consumer_purchase, only: [:show, :edit, :update, :destroy]
 
   # GET /consumer_purchases

@@ -1,4 +1,5 @@
 class PosVehiclesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_pos_vehicle, only: [:show, :edit, :update, :destroy]
 
   # GET /pos_vehicles

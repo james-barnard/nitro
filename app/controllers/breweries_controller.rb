@@ -1,4 +1,5 @@
 class BreweriesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
 
   # GET /breweries

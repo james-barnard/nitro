@@ -1,4 +1,5 @@
 class LocalProductsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_local_product, only: [:show, :edit, :update, :destroy]
 
   # GET /local_products

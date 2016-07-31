@@ -1,4 +1,5 @@
 class OwnersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_owner, only: [:show, :edit, :update, :destroy]
 
   # GET /owners
