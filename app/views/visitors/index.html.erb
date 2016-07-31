@@ -84,7 +84,7 @@
             <h2 class="page-header">Tap Head Gallery</h2>
         </div>
         <div class="col-md-4 col-sm-6">
-          <%= link_to page_path('portfolio-item') do %>
+          <%= link_to page_path('buy') do %>
             <img class="img-responsive img-portfolio img-hover" src=<%= asset_path 'bluevase.png' %> alt="">
           <% end %>
         </div>
@@ -118,16 +118,21 @@
     <hr>
 
     <!-- Call to Action Section -->
+<% if user_signed_in? %>
+  <% if current_user.try(:vip?) %>
+    <li><%= link_to 'Users', users_path %></li>
     <div class="well">
         <div class="row">
             <div class="col-md-8">
                 <p>This button will only show up for some users, namely DL!!!.</p>
             </div>
             <div class="col-md-4">
-                <a class="btn btn-lg btn-default btn-block" href="#">Demo</a>
+              <%= link_to "Demo", page_path('buy') %>
             </div>
         </div>
     </div>
+  <% end %>
+<% end %>
 
 </div>
 <!-- /.container -->

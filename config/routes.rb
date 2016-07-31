@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root to: 'visitors#index'
   resources :consumer_purchases
   resources :product_loads
   resources :vending_machines
@@ -13,7 +14,6 @@ Rails.application.routes.draw do
   resources :regions
   resources :organizations
   resources :locations
-  root to: 'visitors#index'
   devise_for :users
   resources :users
 end
