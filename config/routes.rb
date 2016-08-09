@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'particle/enable'
+  get 'particle/buy'
+
   root to: 'visitors#index'
   resources :consumer_purchases
   resources :product_loads

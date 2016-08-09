@@ -1,4 +1,5 @@
 .container
-    .row
-        = link_to page_path('bought')
-          img.img-responsive.img-portfolio.img-hover src=(asset_path 'buyNK.png')
+  .row
+    = form_tag :url => "https://api.particle.io/v1/devices/your-device-ID-goes-here/led?access_token=your-access-token-goes-here", method: :post do |f|
+      = radio_button_tag 'gender', 'male'
+      = submit_tag "Join this Class!", :class => "button"
