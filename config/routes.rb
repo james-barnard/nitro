@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'bot/hello'
   get 'particle/enable'
   get 'particle/buy'
 
