@@ -23,6 +23,8 @@ gem 'high_voltage'
 gem 'pg'
 gem 'simple_form'
 gem 'slim-rails'
+gem 'messenger-ruby'
+
 group :development do
   gem 'better_errors'
   gem 'guard-bundler'
