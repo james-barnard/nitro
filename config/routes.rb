@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get 'bot/hello'
+  match 'bot/chat', via: [:get, :post]
+
   get 'particle/enable'
   get 'particle/buy'
 
