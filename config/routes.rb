@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  match 'bot/chat', via: [:get, :post]
   mount Messenger::Engine, at: "/messenger"
 
   get 'particle/enable'
