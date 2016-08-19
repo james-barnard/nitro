@@ -3,12 +3,12 @@ module BotHelper
     fb_params.first_entry.sender_id
   end
 
-  def request(template)
+  def fb_request(template)
     Messenger::Request.new(template, sender_id)
   end
 
   def request_text(text)
-    request(Messenger::Elements::Text.new(text: "#{text}"))
+    fb_request(Messenger::Elements::Text.new(text: "#{text}"))
   end
 
   def discovery1
