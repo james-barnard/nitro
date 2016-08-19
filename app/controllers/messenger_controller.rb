@@ -9,7 +9,7 @@ class MessengerController < Messenger::MessengerController
       when /one/
         discovery1
       when /two/
-        choices1
+        request(choices1)
       when /three/
         request_text("three")
       when /four/
