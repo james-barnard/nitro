@@ -1,33 +1,29 @@
 class MessengerController < Messenger::MessengerController
+  include BotHelper
+
   def webhook
-    puts "Messenger:DEBUG: #{params.inspect}"
-    puts "Messenger:DEBUG:fb_params: #{fb_params.inspect}"
-    response_text = "Say again?"
+    request = nil
 
     if fb_params.first_entry.callback.message?
-      case fb_params.first_entry.callback.text
+      request = case fb_params.first_entry.callback.text
       when /one/
-        response_text = "one"
+        discovery1
       when /two/
-        response_text = "two"
+        request_text("two")
       when /three/
-        response_text = "three"
+        request_text("three")
       when /four/
-        response_text = "four"
+        request_text("four")
       when /five/
-        response_text = "five"
+        request_text("five")
       when /six/
-        response_text = "six"
+        request_text("six")
       when /seven/
-        response_text = "seven"
+        request_text("seven")
       end
     end
-    Messenger::Client.send(
-        Messenger::Request.new(
-          Messenger::Elements::Text.new(text: "#{response_text}"),
-          fb_params.first_entry.sender_id
-        )
-      )
+
+    Messenger::Client.send( request || request_text("Say again?"))
     render nothing: true, status: 200
   end
 end
