@@ -4,8 +4,11 @@ class MessengerController < Messenger::MessengerController
   def webhook
     request = nil
 
-    if fb_params.first_entry.callback.message?
-      request = case fb_params.first_entry.callback.text
+    request = if fb_params.first_entry.callback.postback?
+      puts "DEBUG:postback: #{fb_params.inspect}"
+      fb_request(choices2)
+    elsif fb_params.first_entry.callback.message?
+      case fb_params.first_entry.callback.text
       when /one/
         discovery1
       when /two/
