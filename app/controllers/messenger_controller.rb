@@ -5,8 +5,13 @@ class MessengerController < Messenger::MessengerController
     request = nil
 
     request = if fb_params.first_entry.callback.postback?
-      puts "DEBUG:postback: #{fb_params.inspect}"
-      fb_request(choices2)
+      puts "DEBUG:postback: #{fb_params.first_entry.postback.payload}"
+      case fb_params.first_entry.postback.payload
+      when /menu/
+        fb_request(choices2)
+      else
+        fb_request(choices1)
+      end
     elsif fb_params.first_entry.callback.message?
       case fb_params.first_entry.callback.text
       when /one/
