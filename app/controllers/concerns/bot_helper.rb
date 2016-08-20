@@ -39,7 +39,7 @@ module BotHelper
     product_title = "Kaffe N°2"
     product_desc = "is a dark roast Suliwasi African blend that yields a rich and satisfying nitro coffee with a thick mocha crema"
 
-    Messenger::Templates::Bubble.new(
+    Messenger::Elements::Bubble.new(
       title: product_title,
       subtitle: product_desc,
       image_url: 'assets/brewM1.png',
@@ -51,7 +51,7 @@ module BotHelper
     product_title = "Kaffe N°3"
     product_desc = "is a blend of medium roast Central and South American Robusta coffees, cold brewed for 15 hours. Its distinctive cascading body and carmel colored crema evoke a creamy satisfying chocolate mouthfeel. Our signature nitro coffee formula is only available from me"
 
-    Messenger::Templates::Bubble.new(
+    Messenger::Elements::Bubble.new(
       title: product_title,
       subtitle: product_desc,
       image_url: 'assets/brewM1.png',
