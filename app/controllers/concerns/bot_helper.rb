@@ -29,6 +29,44 @@ module BotHelper
     )
   end
 
+  def menu
+    Messenger::Templates::Generic.new(
+      elements: [product1, product2]
+    )
+  end
+
+  def product1
+    product_title = "Kaffe N°2"
+    product_desc = "is a dark roast Suliwasi African blend that yields a rich and satisfying nitro coffee with a thick mocha crema"
+
+    Messenger::Templates::Bubble.new(
+      title: product_title,
+      subtitle: product_desc,
+      image_url: 'assets/brewM1.png',
+      buttons: [btn_buy("brewM2")]
+    )
+  end
+
+  def product2
+    product_title = "Kaffe N°3"
+    product_desc = "is a blend of medium roast Central and South American Robusta coffees, cold brewed for 15 hours. Its distinctive cascading body and carmel colored crema evoke a creamy satisfying chocolate mouthfeel. Our signature nitro coffee formula is only available from me"
+
+    Messenger::Templates::Bubble.new(
+      title: product_title,
+      subtitle: product_desc,
+      image_url: 'assets/brewM1.png',
+      buttons: [btn_buy("brewM3")],
+    )
+  end
+
+  def btn_buy(product)
+    Messenger::Elements::Button.new(
+      type: 'postback',
+      title: 'I want #{product}',
+      value: product
+    )
+  end
+
   def btn_menu
     Messenger::Elements::Button.new(
       type: 'postback',

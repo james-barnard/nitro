@@ -8,7 +8,7 @@ class MessengerController < Messenger::MessengerController
       puts "DEBUG:postback: #{fb_params.first_entry.inspect}"
       case fb_params.first_entry.callback.payload
       when /menu/
-        request_text("menu selections go here")
+        menu
       else
         fb_request(choices1)
       end
