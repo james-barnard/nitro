@@ -19,9 +19,9 @@ class MessengerController < Messenger::MessengerController
     elsif fb_params.first_entry.callback.message?
       case fb_params.first_entry.callback.text
       when /hello/i
-        discovery1
-      when /buy/i
         fb_request(choices1)
+      when /buy/i
+        fb_request(choices2)
       end
     end
 
