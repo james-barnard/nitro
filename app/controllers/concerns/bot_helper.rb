@@ -64,7 +64,7 @@ module BotHelper
 
     Messenger::Elements::Bubble.new(
       title: product_title,
-      image_url: view_context.image_url("NitroThankYou.png"),
+      image_url: view_context.image_url("SimpleThankYou.png"),
       buttons: [btn_menu, btn_chat]
     )
   end
