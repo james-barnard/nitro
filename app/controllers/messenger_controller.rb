@@ -22,10 +22,11 @@ class MessengerController < Messenger::MessengerController
         fb_request(choices1)
       when /buy/i
         fb_request(choices2)
+      else
+        Messenger::Client.send( request || request_text("Say Hello Niki!"))
       end
     end
 
-    Messenger::Client.send( request || request_text("Say again?"))
     render nothing: true, status: 200
   end
 end
