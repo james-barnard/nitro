@@ -61,7 +61,7 @@ module BotHelper
 
   def thank_you
     product_title = "Your pour is ready!"
-    product_desc = "hold your glass under the spout and press the POUR button for a full second"
+    product_desc = "Hold your glass under the spout and press the POUR button for a full second"
 
     Messenger::Elements::Bubble.new(
       title: product_title,
