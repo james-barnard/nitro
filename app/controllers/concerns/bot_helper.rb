@@ -59,6 +59,16 @@ module BotHelper
     )
   end
 
+  def thank_you
+    product_title = "Thank You!"
+
+    Messenger::Elements::Bubble.new(
+      title: product_title,
+      image_url: view_context.image_url("NitroThankYou.png"),
+      buttons: [btn_menu, btn_chat]
+    )
+  end
+
   def btn_buy(product)
     Messenger::Elements::Button.new(
       type: 'postback',
@@ -90,7 +100,7 @@ module BotHelper
     ParticleController.new.enable
 
     Messenger::Templates::Generic.new(
-      elements: [brew]
+      elements: [thank_you]
     )
   end
 end
