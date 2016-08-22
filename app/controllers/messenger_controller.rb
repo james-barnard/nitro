@@ -18,20 +18,10 @@ class MessengerController < Messenger::MessengerController
       end
     elsif fb_params.first_entry.callback.message?
       case fb_params.first_entry.callback.text
-      when /one/i
+      when /hello/i
         discovery1
-      when /two/i
+      when /buy/i
         fb_request(choices1)
-      when /three/i
-        request_text("three")
-      when /four/i
-        request_text("four")
-      when /five/i
-        request_text("five")
-      when /six/i
-        request_text("six")
-      when /seven/i
-        request_text("seven")
       end
     end
 
