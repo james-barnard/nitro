@@ -5,7 +5,6 @@ class MessengerController < Messenger::MessengerController
     request = nil
 
     request = if fb_params.first_entry.callback.postback?
-      puts "DEBUG:postback: #{fb_params.first_entry.inspect}"
       case fb_params.first_entry.callback.payload
       when /menu/
         fb_request(menu)
@@ -21,7 +20,6 @@ class MessengerController < Messenger::MessengerController
       when /hello/i
         fb_request(choices1)
       when /buy/i
-        puts "responding to buy"
         fb_request(choices2)
       end
     end
