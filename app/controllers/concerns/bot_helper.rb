@@ -60,10 +60,12 @@ module BotHelper
   end
 
   def thank_you
-    product_title = "Thank You!"
+    product_title = "Your pour is ready!"
+    product_desc = "hold your glass under the spout and press the POUR button for a full second"
 
     Messenger::Elements::Bubble.new(
       title: product_title,
+      subtitle: product_desc,
       image_url: view_context.image_url("SimpleThankYou.png"),
       buttons: [btn_menu, btn_chat]
     )
