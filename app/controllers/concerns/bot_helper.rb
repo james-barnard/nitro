@@ -42,7 +42,7 @@ module BotHelper
     Messenger::Elements::Bubble.new(
       title: product_title,
       subtitle: product_desc,
-      image_url: '/assets/brewM1.png',
+      image_url: image_url("brewM1.png"),
       buttons: [btn_buy("brewM2")]
     )
   end
@@ -54,7 +54,7 @@ module BotHelper
     Messenger::Elements::Bubble.new(
       title: product_title,
       subtitle: product_desc,
-      image_url: '/assets/brewM1.png',
+      image_url: image_url("brewM1.png"),
       buttons: [btn_buy("brewM3")],
     )
   end
