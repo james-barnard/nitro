@@ -43,7 +43,7 @@ module BotHelper
       title: product_title,
       subtitle: product_desc,
       image_url: view_context.image_url("brewM1.png"),
-      buttons: [btn_buy("brewM2")]
+      buttons: [btn_buy("brewM1")]
     )
   end
 
@@ -55,14 +55,14 @@ module BotHelper
       title: product_title,
       subtitle: product_desc,
       image_url: view_context.image_url("brewM1.png"),
-      buttons: [btn_buy("brewM3")],
+      buttons: [btn_buy("brewM2")],
     )
   end
 
   def btn_buy(product)
     Messenger::Elements::Button.new(
       type: 'postback',
-      title: 'I want #{product}',
+      title: "I want #{product}",
       value: product
     )
   end
@@ -80,6 +80,17 @@ module BotHelper
       type: 'postback',
       title: 'Just Chat',
       value: 'chat1'
+    )
+  end
+
+  def enable(selection)
+    brew = { brew1: product1, brew2: product2 }[selection]
+    puts "DEBUG:enable:#{brew}"
+
+    ParticleController.new.enable
+
+    Messenger::Templates::Generic.new(
+      elements: [brew]
     )
   end
 end

@@ -9,6 +9,10 @@ class MessengerController < Messenger::MessengerController
       case fb_params.first_entry.callback.payload
       when /menu/
         fb_request(menu)
+      when /BrewM1/
+        fb_request(enable(:brew1))
+      when /BrewM2/
+        fb_request(enable(:brew2))
       else
         fb_request(choices1)
       end
