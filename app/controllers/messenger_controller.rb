@@ -23,12 +23,11 @@ class MessengerController < Messenger::MessengerController
       when /buy/i
         puts "responding to buy"
         fb_request(choices2)
-      else
-        Messenger::Client.send( request || request_text("Say Hello Niki!"))
       end
     end
 
-        puts "responding OK"
+    puts "responding OK"
+    Messenger::Client.send( request || request_text("Say Hello Niki!"))
 
     render nothing: true, status: 200
   end
