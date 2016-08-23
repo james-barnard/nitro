@@ -24,7 +24,7 @@ class MessengerController < Messenger::MessengerController
       end
     end
 
-    #Messenger::Client.send( request || request_text("Say Hello Niki!"))
+    Messenger::Client.send( request || request_text("Say Hello Niki!"))
 
     render nothing: true, status: 200
   end
