@@ -2,7 +2,7 @@ class MessengerController < Messenger::MessengerController
   include BotHelper
 
   def webhook
-    request = request_text("Say Hello Niki!")
+    request = request_text("Hello!")
 
     request = if fb_params.first_entry.callback.postback?
       case fb_params.first_entry.callback.payload
@@ -24,7 +24,7 @@ class MessengerController < Messenger::MessengerController
       end
     end
 
-    Messenger::Client.send( request || request_text("Say Hello Niki!"))
+    Messenger::Client.send( request || request_text("Hello"))
 
     render nothing: true, status: 200
   end
