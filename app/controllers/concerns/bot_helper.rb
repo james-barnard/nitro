@@ -1,4 +1,8 @@
 module BotHelper
+  def meter
+    "payload.inspect:[#{fb_params.first_entry.payload.inspect}]"
+  end
+
   def sender_id
     fb_params.first_entry.sender_id
   end
