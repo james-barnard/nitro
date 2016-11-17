@@ -4,8 +4,6 @@ class MessengerController < Messenger::MessengerController
   def webhook
     request = request_text("Hello!")
 
-    @level = meter(fb_params)
-
     request = if fb_params.first_entry.callback.postback?
       case fb_params.first_entry.callback.payload
       when /menu/
@@ -20,7 +18,7 @@ class MessengerController < Messenger::MessengerController
     elsif fb_params.first_entry.callback.message?
       case fb_params.first_entry.callback.text
       when /meter/i
-        request_text(level)
+        request_text(meter(fb_params))
       when /hello/i
         request_text("At what location may I serve you today?")
       when /buy/i
