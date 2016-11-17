@@ -1,5 +1,5 @@
 module BotHelper
-  def meter
+  def meter(fb_params)
     "payload.inspect:[#{fb_params.first_entry.payload.inspect}]"
   end
 
