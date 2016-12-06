@@ -18,6 +18,12 @@ p
 p
   strong Postal code:
   = @location.postal_code
+p
+  strong Lat:
+  = @location.lat
+p
+  strong Longitude:
+  = @location.long
 
 = link_to 'Edit', edit_location_path(@location)
 '|
