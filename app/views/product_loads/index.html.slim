@@ -1,4 +1,4 @@
-h1 Listing product_loads
+h1 Product Loads
 
 table
   thead
@@ -16,7 +16,7 @@ table
     - @product_loads.each do |product_load|
       tr
         td = product_load.local_product.try(:product).try(:name)
-        td = product_load.vending_machine.name
+        td = product_load.vending_machine.try(:name)
         td = product_load.total_pours
         td = product_load.date_loaded
         td = product_load.expiration
