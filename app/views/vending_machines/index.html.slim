@@ -18,8 +18,8 @@
           - @vending_machines.each do |vending_machine|
             tr
               td = vending_machine.owner
-              td = vending_machine.route.name
-              td = vending_machine.location.name
+              td = vending_machine.route.try(:name)
+              td = vending_machine.location.try(:name)
               td = vending_machine.model
               td = vending_machine.firmware_version
               td = vending_machine.last_serviced
