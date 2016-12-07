@@ -1,28 +1,28 @@
 p#notice = notice
 
 p
-  strong Name:
+  strong> Name:
   = @location.name
 p
-  strong Address 1:
+  strong> Address 1:
   = @location.address_1
 p
-  strong Address 2:
+  strong> Address 2:
   = @location.address_2
 p
-  strong City:
+  strong> City:
   = @location.city
 p
-  strong State:
+  strong> State:
   = @location.state
 p
-  strong Postal code:
+  strong> Postal code:
   = @location.postal_code
 p
-  strong Lat:
+  strong> Lat:
   = @location.lat
 p
-  strong Longitude:
+  strong> Longitude:
   = @location.long
 
 = link_to 'Edit', edit_location_path(@location)

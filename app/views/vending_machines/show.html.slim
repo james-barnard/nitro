@@ -1,22 +1,22 @@
 p#notice = notice
 
 p
-  strong Model:
+  strong> Model:
   = @vending_machine.model
 p
-  strong Firmware version:
+  strong> Firmware version:
   = @vending_machine.firmware_version
 p
-  strong Location:
-  = @vending_machine.location
+  strong> Location:
+  = @vending_machine.location.name
 p
-  strong Route:
-  = @vending_machine.route
+  strong> Route:
+  = @vending_machine.route.name
 p
-  strong Owner:
+  strong> Owner:
   = @vending_machine.owner
 p
-  strong Last serviced:
+  strong> Last serviced:
   = @vending_machine.last_serviced
 
 = link_to 'Edit', edit_vending_machine_path(@vending_machine)
