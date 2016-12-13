@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'route_man/calc'
+
   mount Messenger::Engine, at: "/messenger"
 
   get 'particle/enable'

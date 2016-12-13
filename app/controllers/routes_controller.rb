@@ -16,6 +16,7 @@ class RoutesController < ApplicationController
   # GET /routes/new
   def new
     @route = Route.new
+    @routemen_candidates = User.all
   end
 
   # GET /routes/1/edit

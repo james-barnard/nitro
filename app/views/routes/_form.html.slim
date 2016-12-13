@@ -4,6 +4,7 @@
   .form-inputs
     = f.input :name
     = f.input :description
+    = f.association :user, collection: @routemen_candidates
 
   .form-actions
     = f.button :submit
