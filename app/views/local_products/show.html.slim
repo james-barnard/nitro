@@ -1,14 +1,14 @@
 p#notice = notice
 
 p
-  strong Product:
-  = @local_product.product
+  strong> Product:
+  = @local_product.product.try(:name)
 p
-  strong Brewery:
-  = @local_product.brewery
+  strong> Brewery:
+  = @local_product.brewery.try(:name)
 p
-  strong Region:
-  = @local_product.region
+  strong> Region:
+  = @local_product.region.try(:name)
 
 = link_to 'Edit', edit_local_product_path(@local_product)
 '|

@@ -7,6 +7,7 @@
           tr
             th Name
             th Description
+            th Route Man
             th
             th
             th
@@ -16,6 +17,7 @@
             tr
               td = route.name
               td = route.description
+              td = route.try(:user).try(:email)
               td = link_to 'Show', route
               td = link_to 'Edit', edit_route_path(route)
               td = link_to 'Destroy', route, data: { confirm: 'Are you sure?' }, method: :delete

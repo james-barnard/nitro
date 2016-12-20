@@ -2,9 +2,9 @@
   = f.error_notification
 
   .form-inputs
-    = f.association :product
-    = f.association :brewery
-    = f.association :region
+    = f.association :product, include_blank: false
+    = f.association :brewery, include_blank: false
+    = f.association :region, include_blank: false
 
   .form-actions
     = f.button :submit

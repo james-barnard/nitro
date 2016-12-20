@@ -4,7 +4,7 @@
   .form-inputs
     = f.input :name
     = f.input :description
-    = f.association :user, collection: @routemen_candidates
+    = f.association :user, collection: @routemen_candidates, include_blank: false
 
   .form-actions
     = f.button :submit

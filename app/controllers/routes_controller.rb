@@ -16,11 +16,12 @@ class RoutesController < ApplicationController
   # GET /routes/new
   def new
     @route = Route.new
-    @routemen_candidates = User.all
-  end
+    @routemen_candidates = route_guys
+    end
 
   # GET /routes/1/edit
   def edit
+    @routemen_candidates = route_guys
   end
 
   # POST /routes
@@ -71,6 +72,10 @@ class RoutesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def route_params
-      params.require(:route).permit(:name, :description)
+      params.require(:route).permit(:name, :description, :user_id)
+    end
+
+    def route_guys
+      User.all.collect {|u| [u.email, u.id]}
     end
 end

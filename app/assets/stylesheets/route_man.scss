@@ -2,6 +2,19 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 //
+#routemanhdr {
+  border: 1px solid #000;
+  box-sizing: border-box;
+  width: 100%;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7db9e8+4,207cca+34,144b6d+65,1e5799+100 */
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7db9e8+4,144b6d+40,1e5799+60,207cca+86 */
+  background: #7db9e8; /* Old browsers */
+  background: -moz-linear-gradient(left,  #7db9e8 4%, #144b6d 40%, #1e5799 60%, #207cca 86%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left,  #7db9e8 4%,#144b6d 40%,#1e5799 60%,#207cca 86%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right,  #7db9e8 4%,#144b6d 40%,#1e5799 60%,#207cca 86%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7db9e8', endColorstr='#207cca',GradientType=1 ); /* IE6-9 */
+}
+
 ul {
 list-style-type: none;
 padding: 0;

@@ -8,5 +8,11 @@ class RouteManController < ApplicationController
 
   def calc
     @routes = Route.all
+    @machines = VendingMachine.all
+    respond_to do |format|
+      format.html
+      format.js
+    end
+
   end
 end
