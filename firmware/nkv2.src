@@ -1,0 +1,110 @@
+//nitrokaffe.free.pour
+int LED1 = D2;
+int runLED = D7;
+
+int relay1 = D3;
+int relay2 = D4;
+
+int buttonPour = D1;
+
+int flowSensor = A0;
+int flowPower = A5;
+
+//////////////
+
+int productRelay = 0;
+int productLED = 0;
+int mode = 0;
+int loops = 0;
+
+int flow = 0;
+int pressure = 0;
+
+int delayMS = 200;
+int waitLoop = 0;
+int pourTime = 0;
+
+boolean toggle = true;
+
+
+void setup() {
+
+  pinMode(runLED, OUTPUT);
+  pinMode(LED1, OUTPUT);
+  pinMode(relay1, OUTPUT);
+  pinMode(relay2, OUTPUT);
+  pinMode(flowPower,OUTPUT);
+
+	pinMode(flowSensor, INPUT);
+	pinMode(buttonPour, INPUT);
+
+	digitalWrite(LED1, LOW);
+
+	Particle.function("nitroCmd",nitroCMD);
+
+	waitLoop = 50;
+	pourTime = 25;
+}
+
+void loop() {
+  if(mode == 1) {
+    Particle.publish("mode", "1");
+		digitalWrite(productLED, HIGH);
+		mode = 2;
+		loops = 0;
+	} else if(mode == 2) { //wait for button press
+		if( digitalRead(buttonPour) == LOW) {
+      Particle.publish("mode", "3");
+			mode = 3;
+		} else if( loops > waitLoop) {
+			mode = 0; //timeout waiting for User
+			digitalWrite(productLED, LOW);
+      Particle.publish("mode", "timeout");
+		} else {
+			loops++;
+		}
+	} else if(mode == 3) {
+		if( digitalRead(buttonPour) == LOW) {
+			mode = 4;
+		} else {
+      Particle.publish("mode", "back to wait");
+			loops++;
+			mode = 2; // back to wait
+		}
+	} else if(mode == 4) {
+    Particle.publish("pour", "started");
+		digitalWrite(productRelay, HIGH);
+		mode = 5;
+	} else if( mode >= 5 && mode < pourTime) { // pour until mode == pourTime
+		flow = analogRead(flowSensor);
+		mode = mode+1;
+	} else if(mode == pourTime) {
+		digitalWrite(productRelay, LOW);
+		digitalWrite(productLED, LOW);
+		mode = 0;
+	}
+	delay(delayMS); // 200ms
+
+	if( toggle ) {
+	    digitalWrite(runLED, HIGH);
+	    toggle = false;
+	} else {
+	    digitalWrite(runLED, LOW);
+	    toggle = true;
+	}
+}
+
+int nitroCMD(String command) {
+  Particle.publish("nitroCmd", command);
+	if( mode > 0 ) {
+		return 100;
+	}
+  //if( command == "pour1" ) {
+		productLED = LED1;
+		productRelay = relay1;
+		mode = 1;
+
+		return 200;
+	//}
+	return -1;
+}
