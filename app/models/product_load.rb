@@ -5,4 +5,8 @@ class ProductLoad < ActiveRecord::Base
   def expiration
     date_loaded + 2.weeks
   end
+
+  def days_remaining
+    (expiration.to_date - Date.today).to_i
+  end
 end

@@ -8,7 +8,7 @@ class RouteManController < ApplicationController
 
   def calc
     @routes = Route.all
-    @machines = VendingMachine.all
+    @machines = VendingMachine.expiring_on_route_in_days(params[:routeman][:route_id], params[:routeman][:expires].to_i)
     respond_to do |format|
       format.html
       format.js
