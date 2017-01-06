@@ -1,16 +1,22 @@
 version: '2'
+volumes:
+  db-data:
+    external: false
+
 services:
   db:
     image: postgres:9.4.1
-    ports:
-      - "5432:5432"
+    env_file: .env
+    volumes:
+      - db-data:/var/lib/postgresql/db-data
 
-  web:
+  app:
     build: .
-    command: bin/rails server --port 3000 --binding 0.0.0.0
+    env_file: .env
+    volumes:
+      - .:/usr/src/app
     ports:
       - "3000:3000"
-    links:
+    depends_on:
       - db
-    volumes:
-      - .:/nitro
+
