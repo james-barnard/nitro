@@ -1,4 +1,5 @@
 class RouteManController < ApplicationController
+  DEFAULT_EXPIRES = 7
   before_action :authenticate_user!
 
   def index
@@ -8,7 +9,11 @@ class RouteManController < ApplicationController
 
   def calc
     @routes = Route.all
-    @machines = VendingMachine.expiring_on_route_in_days(params[:routeman][:route_id], params[:routeman][:expires].to_i)
+    if params[:routeman]
+      @route_id = params[:routeman].fetch(:route_id, @routes.first.id)
+      @expires  = params[:routeman].fetch(:expires, DEFAULT_EXPIRES)
+    end
+    @machines = VendingMachine.expiring_on_route_in_days(@route_id, @expires)
     respond_to do |format|
       format.html
       format.js
