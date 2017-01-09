@@ -13,7 +13,7 @@ class RouteManController < ApplicationController
       @route_id = params[:routeman].fetch(:route_id, @routes.first.id)
       @expires  = params[:routeman].fetch(:expires, DEFAULT_EXPIRES)
     end
-    @machines = VendingMachine.expiring_on_route_in_days(@route_id, @expires)
+    @machines = VendingMachine.expiring_on_route_in_days(@route_id.to_i, @expires.to_i)
     respond_to do |format|
       format.html
       format.js
