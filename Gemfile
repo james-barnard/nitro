@@ -18,7 +18,8 @@ group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
 end
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 3.3.6'
+gem 'bootstrap-modal-rails'
 gem 'devise'
 gem 'high_voltage'
 gem 'pg'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161213190417) do
+ActiveRecord::Schema.define(version: 20170113000108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,15 @@ ActiveRecord::Schema.define(version: 20161213190417) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "kegs", force: :cascade do |t|
+    t.string   "kid"
+    t.integer  "size"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "kegs", ["kid"], name: "index_kegs_on_kid", unique: true, using: :btree
 
   create_table "local_products", force: :cascade do |t|
     t.integer  "product_id"
@@ -122,6 +131,7 @@ ActiveRecord::Schema.define(version: 20161213190417) do
     t.datetime "date_loaded"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.datetime "removed_at"
   end
 
   add_index "product_loads", ["local_product_id"], name: "index_product_loads_on_local_product_id", using: :btree
