@@ -1,0 +1,9 @@
+- if @route_started
+  h3 Route Started
+- else
+  = simple_form_for 'routeman', html: { class: 'form-inline' }, method: :get, remote: true do |f|
+    = f.input 'route_id', collection: route_options(@routes), size:15, include_blank: false, required: false, selected: @route_id
+    = f.input 'expires', collection: 3..6, size: 1, include_blank: false, required: false, selected: @expires
+    = f.button :submit, 'calc'
+    = f.button :submit, 'start'
+

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'route_man/refresh'
   get 'route_man/calc'
   get "route_man/loaded_products" => 'route_man#loaded_products', :as => :loaded_products
   get "route_man/remove_product"

@@ -1,5 +1,4 @@
-ul
-  - @machines.each do |vm|
-    li = link_to vm.location.concise_address,
-      loaded_products_path(:vm_id=> vm.id),
-      {:remote=>true, 'data-toggle'=>"modal", 'data-target'=>'#modal-window'}
+- @machines.each do |vm|
+  li = link_to vm.location.concise_address,
+    loaded_products_path(:vm_id=> vm.id),
+    {:remote=>true, 'data-toggle'=>"modal", 'data-target'=>'#modal-window'}
