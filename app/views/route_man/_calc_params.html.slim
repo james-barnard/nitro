@@ -5,5 +5,4 @@
     = f.input 'route_id', collection: route_options(@routes), size:15, include_blank: false, required: false, selected: @route_id
     = f.input 'expires', collection: 3..6, size: 1, include_blank: false, required: false, selected: @expires
     = f.button :submit, 'calc'
-    = f.button :submit, 'start'
-
+    = f.button :submit, (@active_run.nil? ? 'start' : 'resume')

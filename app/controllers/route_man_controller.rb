@@ -2,34 +2,32 @@ class RouteManController < ApplicationController
   DEFAULT_EXPIRES = 7
   before_action :authenticate_user!
 
-  def refresh
-    @run = Run.find params[:run_id]
-    @route_started = true
-    @machines = @run.product_loads.collect {|pl| pl.vending_machine}
-    @local_products = @machines.collect {|m| m.local_products}.flatten
-  end
-
   def calc
+    @active_run = Run.active(current_user)
     @routes = Route.all
     if params[:routeman]
       @route_id = params[:routeman].fetch(:route_id, @routes.first.id)
       @expires  = params[:routeman].fetch(:expires, DEFAULT_EXPIRES)
     end
-    @machines = VendingMachine.expiring_on_route_in_days(@route_id.to_i, @expires.to_i)
-    @local_products = @machines.collect {|m| m.local_products}.flatten
+
+    if params[:commit] == "resume"
+      refresh(@active_run.id)
+    elsif params[:commit] == "calc"
+      @machines = VendingMachine.expiring_on_route_in_days(@route_id.to_i, @expires.to_i)
+      @local_products = @machines.collect {|m| m.local_products}.flatten
+    end
 
     if params[:commit] == "start"
       @route_started = true
       route = Route.find @route_id
-      run = route.runs.build(user_id: current_user, status: "active")
+      run = route.runs.build(user_id: current_user.id, status: "active")
       if run.save
         flash[:success] = "Run Started"
         @local_products.each { |p| run.duds.create(product_load_id: p.id) }
-        return redirect_to action: "refresh", run_id: run.id
+        refresh(run.id)
       else
         flash[:error] = "Error: #{run.messages}"
       end
-
     end
 
     respond_to do |format|
@@ -56,5 +54,14 @@ class RouteManController < ApplicationController
       format.html
       format.js
     end
+  end
+
+  private
+
+  def refresh(run_id)
+    @run = Run.find(run_id)
+    @route_started = true
+    @machines = @run.product_loads.collect {|pl| pl.vending_machine}
+    @local_products = @machines.collect {|m| m.local_products}.flatten
   end
 end
