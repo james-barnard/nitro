@@ -6,7 +6,7 @@ module BotHelper
   end
 
   def recipient_id
-    fb_params.first_entry.recipient_id
+    fb_params.first_entry.inspect
   end
 
   def sender_id
