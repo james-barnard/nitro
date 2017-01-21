@@ -9,6 +9,8 @@ gem 'jquery-rails'
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'jquery-ui-rails'
 gem 'therubyracer'
+gem "rmagick"
+gem "carrierwave"
 
 gem 'jbuilder', '~> 2.0'
 group :development, :test do

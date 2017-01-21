@@ -72,6 +72,10 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    carrierwave (1.0.0)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.1)
@@ -229,6 +233,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    rmagick (2.16.0)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
@@ -320,6 +325,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.6)
   byebug
   capybara
+  carrierwave
   coffee-rails (~> 4.1.0)
   database_cleaner
   devise
@@ -345,6 +351,7 @@ DEPENDENCIES
   rb-fchange
   rb-fsevent
   rb-inotify
+  rmagick
   rspec-rails
   sass-rails (~> 5.0)
   selenium-webdriver
