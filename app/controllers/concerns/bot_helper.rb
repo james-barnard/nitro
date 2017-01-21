@@ -1,11 +1,10 @@
 module BotHelper
   def meter(fb_params)
-    #"payload.inspect:[#{fb_params.first_entry.callback.inspect}]"
-    "recipient_id:[#{recipient_id}]"
+    "payload.inspect:[#{fb_params.first_entry.callback.inspect}]"
   end
 
   def recipient_id
-    fb_params.first_entry.inspect
+    fb_params.first_entry.recipient_id
   end
 
   def sender_id

@@ -2,7 +2,8 @@ class MessengerController < Messenger::MessengerController
   include BotHelper
 
   def webhook
-    request = request_text("Hello!")
+    profile = Messenger::Client.get_user_profile(recipient_id)
+    request_text(profile.inspect)
 
     request = if fb_params.first_entry.callback.postback?
       case fb_params.first_entry.callback.payload
