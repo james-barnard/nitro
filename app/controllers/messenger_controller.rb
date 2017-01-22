@@ -3,7 +3,7 @@ class MessengerController < Messenger::MessengerController
 
   def webhook
     profile = Messenger::Client.get_user_profile(sender_id)
-    request_text(profile.inspect)
+    Messenger::Client.send(request_text(profile.inspect))
 
     request = if fb_params.first_entry.callback.postback?
       case fb_params.first_entry.callback.payload
