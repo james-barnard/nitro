@@ -22,7 +22,7 @@ class MessengerController < Messenger::MessengerController
         request_text(meter(fb_params))
       when /hello/i
         Messenger::Client.send(request_text("#{greeting} #{location_prompt}"))
-        quick_reply_location_element
+        Messenger::Elements::QuickReply.new(content_type: 'location')
       when /buy/i
         fb_request(choices2)
       end
