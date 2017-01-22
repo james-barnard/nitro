@@ -8,7 +8,7 @@ module BotHelper
   end
 
   def sender_id
-    fb_params.first_entry.payload.sender_id
+    fb_params.first_entry.sender_id
   end
 
   def fb_request(template)
