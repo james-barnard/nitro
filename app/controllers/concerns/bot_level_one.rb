@@ -10,7 +10,7 @@ module BotLevelOne
     "Hi #{pseudo}!"
   end
 
-  def location_prompt(fp_params)
+  def location_prompt
     Messenger::Request.new(
       Messenger::Templates::QuickReplies.new(
         text: "#{greeting}! I would like to pour you some awesome coffee, but I need to know where you are. Do you mind?",
