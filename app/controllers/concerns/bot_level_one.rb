@@ -4,4 +4,13 @@ module BotLevelOne
     @first_name = profile["first_name"]
     @last_name  = profile["last_name"]
   end
+
+  def greeting
+    pseudo = @first_name || "there"
+    "Hi #{pseudo}!"
+  end
+
+  def location_prompt
+    "Can you show me where you are so I can help you find me?"
+  end
 end
