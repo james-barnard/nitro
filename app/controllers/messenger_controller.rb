@@ -3,7 +3,7 @@ class MessengerController < Messenger::MessengerController
   include BotLevelOne
 
   def webhook
-#    identify_user(fb_params) if @first_name.nil?
+    identify_user(fb_params) if @first_name.nil?
 
     request = if fb_params.first_entry.callback.postback?
       case fb_params.first_entry.callback.payload
@@ -21,7 +21,8 @@ class MessengerController < Messenger::MessengerController
       when /meter/i
         request_text(meter(fb_params))
       when /hello/i
-        location_prompt
+        request_text("Hello!")
+        #location_prompt
       when /buy/i
         fb_request(choices2)
       end
