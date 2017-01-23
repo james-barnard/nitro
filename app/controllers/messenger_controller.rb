@@ -5,7 +5,9 @@ class MessengerController < Messenger::MessengerController
   def webhook
 #    identify_user(fb_params) if @first_name.nil?
 
-    request = if fb_params.first_entry.callback.postback?
+    request = if true
+      request_text("Hello!")
+    elsif fb_params.first_entry.callback.postback?
       case fb_params.first_entry.callback.payload
       when /menu/
         fb_request(menu)
