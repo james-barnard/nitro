@@ -26,6 +26,8 @@ class MessengerController < Messenger::MessengerController
       when /buy/i
         fb_request(choices2)
       end
+    else
+      request_text(fb_params.inspect)
     end
 
     Messenger::Client.send( request || request_text("Hello"))
