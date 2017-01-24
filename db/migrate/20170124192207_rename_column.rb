@@ -1,5 +1,5 @@
 class RenameColumn < ActiveRecord::Migration
   def change
-    rename_column :part, :type, :part_type
+    rename_column :parts, :type, :part_type
   end
 end

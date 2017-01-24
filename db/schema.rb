@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170123232514) do
+ActiveRecord::Schema.define(version: 20170124192207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 20170123232514) do
 
   create_table "parts", force: :cascade do |t|
     t.string   "meaning"
-    t.string   "type"
+    t.string   "part_type"
     t.string   "selection"
     t.string   "mid"
     t.integer  "seq"

@@ -5,7 +5,7 @@ module BotLevelOne
       mid:        callback.mid,
       seq:        callback.seq,
       meaning:    callback.text,
-      type:       callback_type(callback),
+      part_type:  callback_type(callback),
       selection:  nil
     )
   end

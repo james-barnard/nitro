@@ -10,7 +10,7 @@ class MessengerController < Messenger::MessengerController
 
     request = if @fbuser.ungreeted?
       request_text(greeting)
-              elsif @fbuser.not_located?
+    elsif @fbuser.not_located?
       location_prompt
     elsif fb_params.first_entry.callback.postback?
       case fb_params.first_entry.callback.payload
