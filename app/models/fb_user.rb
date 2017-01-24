@@ -8,6 +8,7 @@ class FbUser < ActiveRecord::Base
   end
 
   def not_located?
-    (Time.now - parts.where(part_type: "location").created_at) > LOCATION_TIMEOUT
+    last_location = parts.where(part_type: "location").last
+    last_location.nil? || (Time.now - last_location.created_at) > LOCATION_TIMEOUT
   end
 end
