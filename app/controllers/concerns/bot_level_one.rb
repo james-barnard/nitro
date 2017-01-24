@@ -1,7 +1,7 @@
 module BotLevelOne
   def create_part(callback)
     @fbuser.parts.create(
-      fb_user_id: fbuser.id,
+      fb_user_id: @fbuser.id,
       mid:        callback.mid,
       seq:        callback.seq,
       meaning:    callback.text,
