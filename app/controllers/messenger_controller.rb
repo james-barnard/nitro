@@ -3,10 +3,15 @@ class MessengerController < Messenger::MessengerController
   include BotLevelOne
 
   def webhook
-#    identify_user(fb_params) if @first_name.nil?
+    @fbuser = FbUser.find_or_create_by(sender_id: sender_id)
+    @part = create_part(fb_params.first_entry.callback)
 
-    request = if true
-      request_text("Hello!")
+    identify_user(fb_params.first_entry.callback) unless identified?
+
+    request = if @fbuser.ungreeted?
+      request_text(greeting)
+    elsif not_located?
+      location_prompt
     elsif fb_params.first_entry.callback.postback?
       case fb_params.first_entry.callback.payload
       when /menu/

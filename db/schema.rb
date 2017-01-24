@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170121174345) do
+ActiveRecord::Schema.define(version: 20170123232514) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,16 @@ ActiveRecord::Schema.define(version: 20170121174345) do
     t.integer "run_id"
     t.integer "product_load_id"
     t.text    "status"
+  end
+
+  create_table "fb_users", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "sender_id"
+    t.decimal  "lat"
+    t.decimal  "long"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "fulls", force: :cascade do |t|
@@ -114,6 +124,17 @@ ActiveRecord::Schema.define(version: 20170121174345) do
 
   add_index "owners", ["location_id"], name: "index_owners_on_location_id", using: :btree
   add_index "owners", ["organization_id"], name: "index_owners_on_organization_id", using: :btree
+
+  create_table "parts", force: :cascade do |t|
+    t.string   "meaning"
+    t.string   "type"
+    t.string   "selection"
+    t.string   "mid"
+    t.integer  "seq"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "fb_user_id"
+  end
 
   create_table "people", force: :cascade do |t|
     t.string   "name"
