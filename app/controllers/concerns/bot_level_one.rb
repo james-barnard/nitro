@@ -29,7 +29,7 @@ module BotLevelOne
   end
 
   def greeting
-    pseudo = @fb_user.first_name || "there"
+    pseudo = @fbuser.first_name || "there"
     "Hi #{pseudo}!"
   end
 
