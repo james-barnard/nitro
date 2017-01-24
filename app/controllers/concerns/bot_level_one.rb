@@ -20,7 +20,7 @@ module BotLevelOne
     @fbuser.first_name.present?
   end
 
-  def identify_user(sender_id)
+  def identify_user(callback)
     profile = Messenger::Client.get_user_profile(sender_id)
     @fbuser.update(
       first_name: profile["first_name"],
