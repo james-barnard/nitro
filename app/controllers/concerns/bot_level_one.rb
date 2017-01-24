@@ -1,6 +1,7 @@
 module BotLevelOne
   def create_part(callback)
     @fbuser.parts.create(
+      fb_user_id: fb_user.id,
       mid:        callback.mid,
       seq:        callback.seq,
       meaning:    callback.text,
@@ -13,6 +14,8 @@ module BotLevelOne
     if callback.attachments &&
       callback.attachments.kind_of?(Array)
       callback.attachments[0].type
+    else
+      "text"
     end
   end
 
