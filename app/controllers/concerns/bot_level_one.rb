@@ -1,11 +1,11 @@
 module BotLevelOne
   def create_part(callback)
-    Part.create(
-      mid:       callback.mid,
-      seq:       callback.seq,
-      meaning:   callback.text,
-      type:      callback_type(callback),
-      selection: nil
+    @fbuser.parts.create(
+      mid:        callback.mid,
+      seq:        callback.seq,
+      meaning:    callback.text,
+      type:       callback_type(callback),
+      selection:  nil
     )
   end
 
