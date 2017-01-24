@@ -1,4 +1,4 @@
-module MessengerController
+module Messenger
   class FbUser < ActiveRecord::Base
     has_many :parts
     CONVERSATION_TIMEOUT=360
