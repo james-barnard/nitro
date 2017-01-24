@@ -6,11 +6,10 @@ class MessengerController < Messenger::MessengerController
     @fbuser = FbUser.find_or_create_by(sender_id: sender_id)
     @part = create_part(fb_params.first_entry.callback)
 
-    profile = identify_user(fb_params.first_entry.callback) unless identified?
-    request = request_text(profile.inspect)
+    identify_user(fb_params.first_entry.callback) unless identified?
 
-    #request = #if @fbuser.ungreeted?
-    #  request_text(greeting)
+    request = #if @fbuser.ungreeted?
+      request_text(greeting)
 #    elsif not_located?
 #      location_prompt
 #    elsif fb_params.first_entry.callback.postback?
