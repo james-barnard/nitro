@@ -22,10 +22,10 @@ module BotLevelOne
 
   def identify_user(callback)
     profile = Messenger::Client.get_user_profile(sender_id)
-    @fbuser.update(
-      first_name: profile["first_name"],
-      last_name: profile["last_name"]
-    )
+#    @fbuser.update(
+#      first_name: profile["first_name"],
+#      last_name: profile["last_name"]
+#    )
   end
 
   def greeting
