@@ -3,7 +3,7 @@ class MessengerController < Messenger::MessengerController
   include BotLevelOne
 
   def webhook
-    @fbuser = Messenger::FbUser.find_or_create_by(sender_id: sender_id)
+    @fbuser = FbUser.find_or_create_by(sender_id: sender_id)
 #    @part = create_part(fb_params.first_entry.callback)
 
 #    identify_user(fb_params.first_entry.callback) unless identified?
