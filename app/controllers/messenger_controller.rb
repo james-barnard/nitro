@@ -3,6 +3,7 @@ class MessengerController < Messenger::MessengerController
   include BotLevelOne
 
   def webhook
+    Messenger::Client.send( request_text("Hello"))
 
     render nothing: true, status: 200
   end
