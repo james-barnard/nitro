@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 ruby '2.3.3'
-gem 'rails', path: '~/rails'
-#gem 'rails', '4.2.6'
+gem 'rails', '4.2.6'
 gem 'sass-rails', '~> 5.0'
 gem 'httparty', '~> 0.14.0'
 gem 'uglifier', '>= 1.3.0'
@@ -28,8 +27,7 @@ gem 'high_voltage'
 gem 'pg'
 gem 'simple_form'
 gem 'slim-rails'
-gem 'messenger-ruby', path: '~/messenger-ruby'
-#gem 'messenger-ruby', '1.2.0'
+gem 'messenger-ruby', '1.2.0'
 
 group :development do
   gem 'better_errors'
