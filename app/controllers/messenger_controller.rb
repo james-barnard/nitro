@@ -3,12 +3,10 @@ class MessengerController < Messenger::MessengerController
   include BotLevelOne
 
   def webhook
-    Messenger::Client.send( request_text("Hello"))
+    if params['hub.verify_token'] == 'beehive.sceptre.oncolog'
+     render text: params['hub.challenge'] and return
+    end
 
-    render nothing: true, status: 200
-  end
-
-  def dummy
     @fbuser = FbUser.find_or_create_by(sender_id: sender_id)
     create_part(fb_params.first_entry.callback)
 
@@ -18,7 +16,14 @@ class MessengerController < Messenger::MessengerController
       request_text(greeting)
     elsif @fbuser.not_located?
       location_prompt
-    elsif fb_params.first_entry.callback.postback?
+    end
+
+    Messenger::Client.send( request || request_text("Hello"))
+    render nothing: true, status: 200
+  end
+
+  def dummy
+    if fb_params.first_entry.callback.postback?
       case fb_params.first_entry.callback.payload
       when /menu/
         fb_request(menu)
