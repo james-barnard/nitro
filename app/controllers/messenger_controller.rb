@@ -3,6 +3,7 @@ class MessengerController < Messenger::MessengerController
   include BotLevelOne
 
   def webhook
+    render nothing: true, status: 200
     if params['hub.verify_token'] == 'beehive.sceptre.oncolog'
      render text: params['hub.challenge'] and return
     end
