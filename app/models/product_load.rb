@@ -19,4 +19,8 @@ class ProductLoad < ActiveRecord::Base
   def display_name
     local_product.to_label
   end
+
+  def menu_name
+    local_product.product.to_label
+  end
 end

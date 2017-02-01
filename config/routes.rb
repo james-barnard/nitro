@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
+  get 'kaffe/buy'
+
   get 'route_man/refresh'
   get 'route_man/calc'
   get "route_man/loaded_products" => 'route_man#loaded_products', :as => :loaded_products
   get "route_man/remove_product"
 
-  mount Messenger::Engine, at: "/messenger"
+  mount Facebook::Messenger::Server, at: "bot"
 
   get 'particle/enable'
   get 'particle/buy'
@@ -16,6 +18,7 @@ Rails.application.routes.draw do
   resources :routes
   resources :owners
   resources :local_products
+  resources :charges
   resources :products
   resources :pos_vehicles
   resources :consumers

@@ -5,7 +5,7 @@ class ProductLoadsController < ApplicationController
   # GET /product_loads
   # GET /product_loads.json
   def index
-    @product_loads = ProductLoad.all
+    @product_loads = ProductLoad.order(:vending_machine_id).all
   end
 
   # GET /product_loads/1

@@ -11,6 +11,7 @@ gem 'jquery-ui-rails'
 gem 'therubyracer'
 gem "rmagick"
 gem "carrierwave"
+gem "stripe"
 
 gem 'jbuilder', '~> 2.0'
 group :development, :test do
@@ -27,7 +28,7 @@ gem 'high_voltage'
 gem 'pg'
 gem 'simple_form'
 gem 'slim-rails'
-gem 'messenger-ruby', '1.2.0'
+gem 'facebook-messenger', '~> 0.11.1'
 
 group :development do
   gem 'better_errors'
@@ -46,6 +47,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'rspec-rails'
+  gem 'dotenv-rails'
 end
 group :production do
   gem 'rails_12factor'
