@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'kaffe/buy'
+  get 'charges/select'
 
   get 'route_man/refresh'
   get 'route_man/calc'

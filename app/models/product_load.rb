@@ -1,6 +1,8 @@
 class ProductLoad < ActiveRecord::Base
   belongs_to :local_product
   belongs_to :vending_machine
+  has_many   :purchases
+  has_many   :fb_users, through: :purchases
 
   scope :active, -> { where(:removed_at => nil) }
 

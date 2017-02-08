@@ -70,6 +70,6 @@ class VendingMachinesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def vending_machine_params
-      params.require(:vending_machine).permit(:model, :firmware_version, :location_id, :route_id, :owner, :last_serviced)
+      params.require(:vending_machine).permit(:model, :firmware_version, :location_id, :route_id, :owner, :last_serviced, :device_id)
     end
 end

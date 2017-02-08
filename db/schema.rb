@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170128191902) do
+ActiveRecord::Schema.define(version: 20170208012505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20170128191902) do
     t.datetime "updated_at",     null: false
     t.integer  "pos_machine_id"
     t.boolean  "pos_confirmed"
+    t.integer  "customer_id"
   end
 
   create_table "fulls", force: :cascade do |t|
@@ -167,6 +168,7 @@ ActiveRecord::Schema.define(version: 20170128191902) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.datetime "removed_at"
+    t.integer  "valve"
   end
 
   add_index "product_loads", ["local_product_id"], name: "index_product_loads_on_local_product_id", using: :btree
@@ -179,6 +181,18 @@ ActiveRecord::Schema.define(version: 20170128191902) do
     t.datetime "updated_at",  null: false
     t.string   "image"
   end
+
+  create_table "purchases", force: :cascade do |t|
+    t.integer  "product_load_id"
+    t.integer  "fb_user_id"
+    t.string   "pos_type"
+    t.integer  "amount"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "purchases", ["fb_user_id"], name: "index_purchases_on_fb_user_id", using: :btree
+  add_index "purchases", ["product_load_id"], name: "index_purchases_on_product_load_id", using: :btree
 
   create_table "regions", force: :cascade do |t|
     t.string   "name"
@@ -230,6 +244,7 @@ ActiveRecord::Schema.define(version: 20170128191902) do
     t.datetime "last_serviced"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.string   "device_id"
   end
 
   add_index "vending_machines", ["location_id"], name: "index_vending_machines_on_location_id", using: :btree
@@ -250,6 +265,8 @@ ActiveRecord::Schema.define(version: 20170128191902) do
   add_foreign_key "people", "organizations"
   add_foreign_key "product_loads", "local_products"
   add_foreign_key "product_loads", "vending_machines"
+  add_foreign_key "purchases", "fb_users"
+  add_foreign_key "purchases", "product_loads"
   add_foreign_key "vending_machines", "locations"
   add_foreign_key "vending_machines", "routes"
 end

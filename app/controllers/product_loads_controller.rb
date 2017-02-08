@@ -5,7 +5,7 @@ class ProductLoadsController < ApplicationController
   # GET /product_loads
   # GET /product_loads.json
   def index
-    @product_loads = ProductLoad.order(:vending_machine_id).all
+    @product_loads = ProductLoad.active.order(:vending_machine_id).all
   end
 
   # GET /product_loads/1
@@ -70,6 +70,6 @@ class ProductLoadsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_load_params
-      params.require(:product_load).permit(:local_product_id, :vending_machine_id, :total_pours, :date_loaded)
+      params.require(:product_load).permit(:local_product_id, :vending_machine_id, :total_pours, :date_loaded, :valve)
     end
 end

@@ -1,29 +1,35 @@
-h1 Product Loads
+.container-fluid
+  .row
+    h1 Product Loads
+    .column
+      table class="table" id="product_loads"
+        thead
+          tr
+            th Vending Machine
+            th Local Product
+            th Valve
+            th Total Pours
+            th Date Loaded
+            th Expiration Date
+            th
+            th
+            th
 
-table
-  thead
-    tr
-      th Local Product
-      th Vending Machine
-      th Total Pours
-      th Date Loaded
-      th Expiration Date
-      th
-      th
-      th
-
-  tbody
-    - @product_loads.each do |product_load|
-      tr
-        td = product_load.local_product.try(:product).try(:name)
-        td = product_load.vending_machine.try(:to_label)
-        td = product_load.total_pours
-        td = product_load.date_loaded
-        td = product_load.expiration
-        td = link_to 'Show', product_load
-        td = link_to 'Edit', edit_product_load_path(product_load)
-        td = link_to 'Destroy', product_load, data: { confirm: 'Are you sure?' }, method: :delete
-
-br
+        tbody
+          - @product_loads.each do |product_load|
+            tr
+              td = product_load.vending_machine.try(:to_label)
+              td = product_load.local_product.try(:product).try(:name)
+              td = product_load.valve
+              td = product_load.total_pours
+              td = product_load.date_loaded
+              td = product_load.expiration
+              td class='no-sort'
+                = link_to 'Show', product_load
+              td class='no-sort'
+                = link_to 'Edit', edit_product_load_path(product_load)
+              td class='no-sort'
+                = link_to 'Destroy', product_load, data: { confirm: 'Are you sure?' }, method: :delete
+        br
 
 = link_to 'New Product Load', new_product_load_path

@@ -1,4 +1,6 @@
 class FbUser < ActiveRecord::Base
+  has_many :purchases
+  has_many :product_loads, through: :purchases
   has_many :parts
   CONVERSATION_TIMEOUT = 360
   LOCATION_TIMEOUT     = 900

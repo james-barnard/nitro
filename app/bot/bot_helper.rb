@@ -1,4 +1,8 @@
+require 'action_view'
+
 module BotHelper
+  #include ActionView::Helpers
+
   def display_image(message, img)
     message.reply(image_attachment(img))
   end
@@ -8,7 +12,7 @@ module BotHelper
       attachment: {
         type: 'image',
         payload: {
-          url: image_url(img)
+          url: full_path(img)
         }
       }
     }
@@ -26,19 +30,18 @@ module BotHelper
     }
   end
 
-  def mnu_element(title, image)
+  def mnu_element(title, product_load_id)
     {
       title:     title,
-      #image_url: image_url(image),
-      default_action: default_action(image),
-      buttons:   [mnu_button(title)]
+      image_url: full_path("/assets/ThumbNo3-573x300.png"),
+      default_action: default_action(product_load_id)
     }
   end
 
-  def default_action(img)
+  def default_action(product_load_id)
     {
       type: "web_url",
-      url: image_url(img),
+      url: link_to_buy(product_load_id, @fbuser),
       messenger_extensions: true,
       webview_height_ratio: "tall"
       #,fallback_url: "https://peterssendreceiveapp.ngrok.io/"
@@ -53,7 +56,12 @@ module BotHelper
     }
   end
 
-  def image_url(path)
+  def link_to_buy(product_load_id, fbuser)
+    full_path("charges/select?product_load_id=#{product_load_id}&fbuser=#{fbuser.id}")
+  end
+
+  def full_path(path)
+    #path = ActionView::Helpers::AssetUrlHelper.url_to_image(path)
     "https://53c81b8b.ngrok.io/#{path}"
   end
 end
