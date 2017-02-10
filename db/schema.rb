@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170208012505) do
+ActiveRecord::Schema.define(version: 20170208231515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20170208012505) do
     t.integer  "pos_machine_id"
     t.boolean  "pos_confirmed"
     t.integer  "customer_id"
+    t.boolean  "loc_skipped"
   end
 
   create_table "fulls", force: :cascade do |t|

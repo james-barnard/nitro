@@ -11,6 +11,17 @@
   webkit-border-radius: 6px;
   border:2px #245ec6 solid;
 }
+.chat-button {
+  float: right;
+  line-height: 35px;
+  font-size: 30px;
+  border-radius: 6px;
+  moz-border-radius: 6px;
+  webkit-border-radius: 6px;
+  border:2px #245ec6 solid;
+  color: white;
+  background: rgb(59,114,255); /* Old browsers */
+}
 #customButton {
   float: right;
   line-height: 35px;

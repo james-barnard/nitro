@@ -10,23 +10,19 @@ REVERSE_API_URL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.fr
 PHRASES = {
   hello: 'Hi there',
   ask_location: 'I would like to pour you some awesome coffee. Will you send me your location, please?',
-  menu_prompt: 'Would you like to see a menu?',
   vm_address: 'It looks like you\'re at',
   vm_confirm: 'Does this look like right?',
   vm_no_machine: "I can't seem to find a NitroKaffe machine close to you"
 }.freeze
 
-TYPE_LOCATION = [{ content_type: 'location' }]
-MENU_RESPONSES = [
+TYPE_LOCATION = [
   {
-    content_type: 'text',
-    title:        'YES',
-    payload:      'yes_menu'
+    content_type: 'location'
   },
   {
     content_type: 'text',
-    title:        'NO',
-    payload:      'no_menu'
+    title:        'Skip Location',
+    payload:      'just_chat'
   }
 ]
 CONFIRM_LOCATION = [
@@ -51,12 +47,14 @@ def listen
     @sender_id = message.sender['id']
     @fbuser = FbUser.find_or_create_by(sender_id: @sender_id)
 
-    create_part(message.messaging["message"])
-
-    if @fbuser.id > 3
+    if @fbuser.id > 3 # TODO don't forget to git rid of this
       puts "caught ya!"
     elsif message_contains_location?(message)
       connect_user_with_vending_machine(message)
+    elsif message.quick_reply && message.quick_reply == "just_chat"
+      puts "skipping location"
+      @fbuser.update(loc_skipped: true)
+      speak(PHRASES[:hello], nil)
     elsif message.quick_reply && message.quick_reply == "location_confirmed"
       puts "location confirmed!"
       if @fbuser.pos_machine_id.present?
@@ -65,6 +63,7 @@ def listen
       display_menu(message)
     elsif @fbuser.ungreeted?
       speak(PHRASES[:hello], nil)
+      @fbuser.update(loc_skipped: false)
     elsif @fbuser.not_located?
       speak(PHRASES[:ask_location], TYPE_LOCATION)
     elsif
@@ -75,6 +74,8 @@ def listen
         puts "huh?"
       end
     end
+
+    create_part(message.messaging["message"])
   end
 end
 

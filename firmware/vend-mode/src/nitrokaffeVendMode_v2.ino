@@ -9,7 +9,7 @@ enum Modes
 { mIDLE,
   mENABLED,
   mDEBOUNCE,
-  mPOURING, 
+  mPOURING,
   mCOMPLETED
 };
 
