@@ -2,13 +2,21 @@ require 'facebook/messenger'
 
 include Facebook::Messenger
 include BotLevelOne
-include BotHelper
+include MenuHelper
 
 API_URL = 'https://maps.googleapis.com/maps/api/geocode/json?address='.freeze
 REVERSE_API_URL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.freeze
 
+GREETINGS = [
+  'Hi there!',
+  'Hey!',
+  'Wassup?',
+  'Did you jus wake me up?',
+  'Sup?',
+].freeze
+
 PHRASES = {
-  hello: 'Hi there',
+  just_chat: 'So, you just want to hang out and chat? Tell me what\'s on your mind.',
   ask_location: 'I would like to pour you some awesome coffee. Will you send me your location, please?',
   vm_address: 'It looks like you\'re at',
   vm_confirm: 'Does this look like right?',
@@ -45,44 +53,55 @@ def listen
     puts "Received '#{message.inspect}' from #{message.sender}" # debug only
 
     @sender_id = message.sender['id']
-    @fbuser = FbUser.find_or_create_by(sender_id: @sender_id)
+    fb_user = FbUser.find_or_create_by(sender_id: @sender_id)
 
-    if @fbuser.id > 3 # TODO don't forget to git rid of this
+    if fb_user.id > 3 # TODO don't forget to git rid of this
       puts "caught ya!"
+      if message.text.downcase =~ /test/
+        message.reply(test_menu)
+      end
+    elsif message.text && message.text.downcase =~ /test/
+      message.reply(test_menu)
     elsif message_contains_location?(message)
-      connect_user_with_vending_machine(message)
+      connect_user_with_vending_machine(message, fb_user)
     elsif message.quick_reply && message.quick_reply == "just_chat"
       puts "skipping location"
-      @fbuser.update(loc_skipped: true)
-      speak(PHRASES[:hello], nil)
+      fb_user.update(loc_skipped: true)
+      speak(PHRASES[:just_chat], nil)
+    elsif message.quick_reply && message.quick_reply == "no_location"
+      connect_user_with_vending_machine(message, fb_user)
     elsif message.quick_reply && message.quick_reply == "location_confirmed"
       puts "location confirmed!"
-      if @fbuser.pos_machine_id.present?
-        @fbuser.update(pos_confirmed: true)
+      if fb_user.pos_machine_id.present?
+        fb_user.update(pos_confirmed: true)
       end
-      display_menu(message)
-    elsif @fbuser.ungreeted?
-      speak(PHRASES[:hello], nil)
-      @fbuser.update(loc_skipped: false)
-    elsif @fbuser.not_located?
+      display_menu(message, fb_user)
+    elsif fb_user.ungreeted?
+      update_user_profile(fb_user)
+      greet_user(fb_user, message.text)
+      fb_user.update(loc_skipped: false)
+    elsif fb_user.not_located?
       speak(PHRASES[:ask_location], TYPE_LOCATION)
     elsif
       case message.text
       when /hello/i
-        speak(PHRASES[:hello], nil)
+        greet_user(fb_user, message.text)
+      when /menu/i
+        display_menu(message, fb_user)
       else
+        greet_user(fb_user, message.text)
         puts "huh?"
       end
     end
 
-    create_part(message.messaging["message"])
+    create_part(message.messaging["message"], fb_user)
   end
 end
 
-def connect_user_with_vending_machine(message)
+def connect_user_with_vending_machine(message, fb_user)
   @lat, @long = locate_user(message)
   machine = VendingMachine.nearest_machine(@lat, @long)
-  @fbuser.update(pos_machine_id: machine.id, pos_confirmed: false)
+  fb_user.update(pos_machine_id: machine.id, pos_confirmed: false)
 
   if machine.present?
     speak("#{PHRASES[:vm_address]} #{machine.display_address}", nil)
@@ -90,6 +109,16 @@ def connect_user_with_vending_machine(message)
   else
     speak(PHRASES[:vm_no_machine], nil)
   end
+end
+
+def greet_user(fb_user, text)
+  speak(greeting(fb_user, text), nil)
+end
+
+def greeting(fb_user, text)
+  name = fb_user.first_name
+  prefix = GREETINGS[rand(GREETINGS.size)]
+  name.nil? ? prefix : prefix.insert(-2, " #{name}")
 end
 
 def speak(text, quick_replies = nil)
@@ -119,12 +148,30 @@ def locate_user(message)
   [lat, long]
 end
 
-def display_menu(message)
-  if @fbuser.pos_machine_id.present?
-    machine = VendingMachine.find(@fbuser.pos_machine_id)
+def display_menu(message, fb_user)
+  if fb_user.pos_machine_id.present?
+    machine = VendingMachine.find(fb_user.pos_machine_id)
     product_loads = machine.current_load
-    mnu_elements = product_loads.map {|pl| mnu_element(pl.menu_name, pl.id)}
+    mnu_elements = product_loads.map {|pl| mnu_element(pl.menu_name, pl.id, fb_user)}
     message.reply(product_menu(mnu_elements)) unless mnu_elements.empty?
   end
 end
+
+def update_user_profile(fb_user)
+  user_profile(fb_user)
+end
+
+def user_profile(fb_user)
+  response = HTTParty.get(user_profile_api(fb_user.sender_id))
+  parsed = JSON.parse(response.body)
+  fb_user.update(
+    first_name: parsed["first_name"],
+    last_name: parsed["last_name"]
+  ) unless parsed["error"]
+end
+
+def user_profile_api(sender_id)
+  "https://graph.facebook.com/v2.6/#{sender_id}?access_token=#{ENV['PAGE_ACCESS_TOKEN']}"
+end
+
 listen

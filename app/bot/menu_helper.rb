@@ -1,6 +1,6 @@
 require 'action_view'
 
-module BotHelper
+module MenuHelper
   #include ActionView::Helpers
 
   def display_image(message, img)
@@ -30,18 +30,42 @@ module BotHelper
     }
   end
 
-  def mnu_element(title, product_load_id)
+  def mnu_element(title, product_load_id, fb_user)
     {
       title:     title,
       image_url: full_path("/assets/ThumbNo3-573x300.png"),
-      default_action: default_action(product_load_id)
+      default_action: default_action(product_load_id, fb_user)
     }
   end
 
-  def default_action(product_load_id)
+  def test_menu()
+    {
+      attachment: {
+        type: 'template',
+        payload: {
+          template_type: 'generic',
+          elements: [{
+            title:     'test',
+            image_url: full_path("/assets/ThumbNo3-573x300.png"),
+            default_action: {
+              type: "web_url",
+              url: link_to_ty(),
+              messenger_extensions: true,
+              webview_height_ratio: "tall"
+            }
+          }]
+        }
+      }
+    }
+  end
+
+  def test_action()
+  end
+
+  def default_action(product_load_id, fb_user)
     {
       type: "web_url",
-      url: link_to_buy(product_load_id, @fbuser),
+      url: link_to_buy(product_load_id, fb_user),
       messenger_extensions: true,
       webview_height_ratio: "tall"
       #,fallback_url: "https://peterssendreceiveapp.ngrok.io/"
@@ -56,8 +80,12 @@ module BotHelper
     }
   end
 
-  def link_to_buy(product_load_id, fbuser)
-    full_path("charges/select?product_load_id=#{product_load_id}&fbuser=#{fbuser.id}")
+  def link_to_ty()
+    full_path("charges/thanks")
+  end
+
+  def link_to_buy(product_load_id, fb_user)
+    full_path("charges/select?product_load_id=#{product_load_id}&fbuser=#{fb_user.id}")
   end
 
   def full_path(path)

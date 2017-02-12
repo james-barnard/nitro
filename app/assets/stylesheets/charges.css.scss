@@ -33,3 +33,13 @@
   color: white;
   background: rgb(59,114,255); /* Old browsers */
 }
+.ty-image {
+  margin-top: -10px;
+}
+#ty-page {
+  background: #eb01a5;
+}
+.foo {
+  background-image: image_url("/assets/nkLOGOblue-285.png"); /* fallback */
+  background-image: image_url("/assets/nkLOGOblue-285.png"), linear-gradient(#eb01a5, #d13531); /* W3C */
+}

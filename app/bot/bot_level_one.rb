@@ -1,7 +1,7 @@
 module BotLevelOne
-  def create_part(message)
-    @fbuser.parts.create(
-      fb_user_id: @fbuser.id,
+  def create_part(message, fb_user)
+    fb_user.parts.create(
+      fb_user_id: fb_user.id,
       mid:        message["mid"],
       seq:        message["seq"],
       meaning:    message["text"],
