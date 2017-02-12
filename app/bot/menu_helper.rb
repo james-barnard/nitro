@@ -30,11 +30,12 @@ module MenuHelper
     }
   end
 
-  def mnu_element(title, product_load_id, fb_user)
+  def mnu_element(title, product_load, fb_user)
+    puts "image_url: full_path(#{product_load.menu_thumb}),"
     {
       title:     title,
-      image_url: full_path("/assets/ThumbNo3-573x300.png"),
-      default_action: default_action(product_load_id, fb_user)
+      image_url: full_path(product_load.menu_thumb),
+      default_action: default_action(product_load.id, fb_user)
     }
   end
 

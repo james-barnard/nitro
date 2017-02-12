@@ -79,6 +79,7 @@ def listen
     elsif fb_user.ungreeted?
       update_user_profile(fb_user)
       greet_user(fb_user, message.text)
+      speak(PHRASES[:ask_location], TYPE_LOCATION)
       fb_user.update(loc_skipped: false)
     elsif fb_user.not_located?
       speak(PHRASES[:ask_location], TYPE_LOCATION)
@@ -152,7 +153,7 @@ def display_menu(message, fb_user)
   if fb_user.pos_machine_id.present?
     machine = VendingMachine.find(fb_user.pos_machine_id)
     product_loads = machine.current_load
-    mnu_elements = product_loads.map {|pl| mnu_element(pl.menu_name, pl.id, fb_user)}
+    mnu_elements = product_loads.map {|pl| mnu_element(pl.menu_name, pl, fb_user)}
     message.reply(product_menu(mnu_elements)) unless mnu_elements.empty?
   end
 end

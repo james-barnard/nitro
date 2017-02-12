@@ -25,4 +25,8 @@ class ProductLoad < ActiveRecord::Base
   def menu_name
     local_product.product.to_label
   end
+
+  def menu_thumb
+    local_product.product.thumb.url.to_s
+  end
 end

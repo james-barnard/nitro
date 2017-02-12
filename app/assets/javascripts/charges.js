@@ -9,7 +9,9 @@ $(function(d, s, id){
 $(function() {
   $("#closeButton").click(function() {
     MessengerExtensions.requestCloseBrowser(
-      function success() {},
+      function success() {
+        alert(err);
+      },
       function error(err) {
         alert(err);
       }
@@ -18,5 +20,17 @@ $(function() {
   });
 });
 window.extAsyncInit = function() {
-    alert("js sdk finished loading");
+  $(function() {
+    $("#closeButton").click(function() {
+      MessengerExtensions.requestCloseBrowser(
+        function success() {
+        alert(err);
+      },
+        function error(err) {
+          alert(err);
+        }
+      );
+      return false;
+    });
+  });
 };
