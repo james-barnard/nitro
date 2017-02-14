@@ -1,9 +1,7 @@
 .webview-font
-  = image_tag "/assets/nitro.png", class: "ty-image"
-  = image_tag "/assets/kaffe-ty-290.png", class: "ty-image"
-  = image_tag "/assets/kaffe-ty-instr-280.png", class: "ty-image"
+  = image_tag "/assets/cb-ty-page.png", class: "ty-image"
   - if @amount.to_i > 0
     p You paid #{@display_amount}
   - else
     p Your Nitro Kaffe brew was on us this time!
-  button type="button" class="chat-button" id="closeButton" Done!
+  button type="button" class="chat-button" id="closeButton" Close

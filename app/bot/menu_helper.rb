@@ -39,30 +39,6 @@ module MenuHelper
     }
   end
 
-  def test_menu()
-    {
-      attachment: {
-        type: 'template',
-        payload: {
-          template_type: 'generic',
-          elements: [{
-            title:     'test',
-            image_url: full_path("/assets/ThumbNo3-573x300.png"),
-            default_action: {
-              type: "web_url",
-              url: link_to_ty(),
-              messenger_extensions: true,
-              webview_height_ratio: "tall"
-            }
-          }]
-        }
-      }
-    }
-  end
-
-  def test_action()
-  end
-
   def default_action(product_load_id, fb_user)
     {
       type: "web_url",
@@ -81,16 +57,13 @@ module MenuHelper
     }
   end
 
-  def link_to_ty()
-    full_path("charges/thanks")
-  end
-
   def link_to_buy(product_load_id, fb_user)
     full_path("charges/select?product_load_id=#{product_load_id}&fbuser=#{fb_user.id}")
   end
 
   def full_path(path)
     #path = ActionView::Helpers::AssetUrlHelper.url_to_image(path)
-    "https://53c81b8b.ngrok.io/#{path}"
+    #"https://53c81b8b.ngrok.io/#{path}"
+    "#{ENV["APPDOMAIN"]}/#{path}"
   end
 end

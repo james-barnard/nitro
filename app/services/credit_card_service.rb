@@ -8,7 +8,7 @@ class CreditCardService
   end
 
   def charge
-    return_value = external_charge_service.create(charge_attributes)
+    external_charge_service.create(charge_attributes)
   end
 
   def create_customer

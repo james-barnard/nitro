@@ -1,50 +1,11 @@
 require 'facebook/messenger'
 
 include Facebook::Messenger
-include BotLevelOne
+include ConversationHelper
 include MenuHelper
 
 API_URL = 'https://maps.googleapis.com/maps/api/geocode/json?address='.freeze
 REVERSE_API_URL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.freeze
-
-GREETINGS = [
-  'Hi there!',
-  'Hey!',
-  'Wassup?',
-  'Did you jus wake me up?',
-  'Sup?',
-].freeze
-
-PHRASES = {
-  just_chat: 'So, you just want to hang out and chat? Tell me what\'s on your mind.',
-  ask_location: 'I would like to pour you some awesome coffee. Will you send me your location, please?',
-  vm_address: 'It looks like you\'re at',
-  vm_confirm: 'Does this look like right?',
-  vm_no_machine: "I can't seem to find a NitroKaffe machine close to you"
-}.freeze
-
-TYPE_LOCATION = [
-  {
-    content_type: 'location'
-  },
-  {
-    content_type: 'text',
-    title:        'Skip Location',
-    payload:      'just_chat'
-  }
-]
-CONFIRM_LOCATION = [
-  {
-    content_type: 'text',
-    title:        'YES',
-    payload:      'location_confirmed'
-  },
-  {
-    content_type: 'text',
-    title:        'NO',
-    payload:      'no_location'
-  }
-]
 
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
@@ -57,11 +18,6 @@ def listen
 
     if fb_user.id > 3 # TODO don't forget to git rid of this
       puts "caught ya!"
-      if message.text.downcase =~ /test/
-        message.reply(test_menu)
-      end
-    elsif message.text && message.text.downcase =~ /test/
-      message.reply(test_menu)
     elsif message_contains_location?(message)
       connect_user_with_vending_machine(message, fb_user)
     elsif message.quick_reply && message.quick_reply == "just_chat"
@@ -110,27 +66,6 @@ def connect_user_with_vending_machine(message, fb_user)
   else
     speak(PHRASES[:vm_no_machine], nil)
   end
-end
-
-def greet_user(fb_user, text)
-  speak(greeting(fb_user, text), nil)
-end
-
-def greeting(fb_user, text)
-  name = fb_user.first_name
-  prefix = GREETINGS[rand(GREETINGS.size)]
-  name.nil? ? prefix : prefix.insert(-2, " #{name}")
-end
-
-def speak(text, quick_replies = nil)
-  message_options = {
-  recipient: { id:   @sender_id },
-  message:   { text: text       }
-  }
-
-  message_options[:message][:quick_replies] = quick_replies if quick_replies
-
-  Bot.deliver(message_options, access_token: ENV['ACCESS_TOKEN'])
 end
 
 def message_contains_location?(message)

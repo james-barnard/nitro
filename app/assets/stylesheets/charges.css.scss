@@ -1,6 +1,6 @@
 .webview-font {
   font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 30px;
+  font-size: 28;
 }
 .product-card {
   margin-top: -5px;
@@ -14,10 +14,10 @@
 .chat-button {
   float: right;
   line-height: 35px;
-  font-size: 30px;
-  border-radius: 6px;
-  moz-border-radius: 6px;
-  webkit-border-radius: 6px;
+  font-size: 20px;
+  border-radius: 4px;
+  moz-border-radius: 4px;
+  webkit-border-radius: 4px;
   border:2px #245ec6 solid;
   color: white;
   background: rgb(59,114,255); /* Old browsers */
@@ -32,14 +32,4 @@
   border:2px #245ec6 solid;
   color: white;
   background: rgb(59,114,255); /* Old browsers */
-}
-.ty-image {
-  margin-top: -10px;
-}
-#ty-page {
-  background: #eb01a5;
-}
-.foo {
-  background-image: image_url("/assets/nkLOGOblue-285.png"); /* fallback */
-  background-image: image_url("/assets/nkLOGOblue-285.png"), linear-gradient(#eb01a5, #d13531); /* W3C */
 }

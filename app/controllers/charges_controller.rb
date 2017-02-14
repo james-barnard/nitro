@@ -5,9 +5,6 @@ class ChargesController < ApplicationController
     @product = @product_load.local_product.product
   end
 
-  def thanks
-  end
-
   def create
     # Amount in cents
     @amount = ENV['MSRP']

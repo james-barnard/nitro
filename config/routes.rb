@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   get 'charges/select'
-  get 'charges/thanks'
 
   get 'route_man/refresh'
   get 'route_man/calc'
