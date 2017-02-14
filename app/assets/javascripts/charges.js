@@ -6,29 +6,12 @@ $(function(d, s, id){
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'Messenger'));
 
-$(function() {
-  $("#closeButton").click(function() {
-    MessengerExtensions.requestCloseBrowser(
-      function success() {
-        alert(err);
-      },
-      function error(err) {
-        alert(err);
-      }
-    );
-    return false;
-  });
-});
 window.extAsyncInit = function() {
   $(function() {
     $("#closeButton").click(function() {
       MessengerExtensions.requestCloseBrowser(
-        function success() {
-        alert(err);
-      },
-        function error(err) {
-          alert(err);
-        }
+        function success() { },
+        function error(err) { }
       );
       return false;
     });
