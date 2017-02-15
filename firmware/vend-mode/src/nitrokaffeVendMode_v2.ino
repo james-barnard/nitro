@@ -29,6 +29,7 @@ int productRelay = relay1; // defaults to relay1
 int pouring      = 0;
 int pourTime     = 15;     // pour time = pourTime * delayMS / 10 seconds
 int waitTimer    = 0;
+String poured    =  ""; // for external notify
 
 
 void setup() {
@@ -115,7 +116,7 @@ bool secretButtonPressed() {
 }
 
 void startPour() {
-    log("pour", "started");
+    log("startPour", "started");
     digitalWrite(productRelay, HIGH);
     mode = mPOURING;
     pouring = 0;
@@ -129,11 +130,13 @@ void pour() {
 }
 
 void completePour() {
-    log("pour", "ended");
+    notify_pour();
+    log("completePour", "ended");
     resetMode();
 }
 
 // External Functions
+
 int nitroCMD(String valve) {
     log("nitroCmd", valve);
     if ( mode == mIDLE ) {
@@ -145,14 +148,19 @@ int nitroCMD(String valve) {
 }
 
 void selectProduct(String valve) {
+    poured = valve;
     if (valve == "P1") {
         productRelay = relay1;
     } else {
         productRelay = relay2;
     }
+    log("productRelay:valve", valve);
 }
 
 void log(String label, String value) {
     Particle.publish(label, value);
-    return;
+}
+
+void notify_pour() {
+    Particle.publish("pour", poured, PRIVATE);
 }
