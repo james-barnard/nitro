@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  post 'particle/pour'
+
   get 'charges/select'
 
   get 'route_man/refresh'

@@ -9,6 +9,8 @@
             th Local Product
             th Valve
             th Total Pours
+            th Enabled
+            th Poured
             th Date Loaded
             th Expiration Date
             th
@@ -22,6 +24,8 @@
               td = product_load.local_product.try(:product).try(:name)
               td = product_load.valve
               td = product_load.total_pours
+              td = product_load.enabled
+              td = product_load.poured
               td = product_load.date_loaded
               td = product_load.expiration
               td class='no-sort'

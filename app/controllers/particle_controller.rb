@@ -1,5 +1,16 @@
 class ParticleController < ApplicationController
   include HTTParty
+  protect_from_forgery except: :pour
+
+  def pour
+    machine = VendingMachine.find_by_device_id params["device_id"]
+    valve  = params["data"][-1].to_i
+    puts "poured from valve: #{valve} on machine: #{machine.model}"
+    product_load = ProductLoad.find_by_pour(vending_machine_id: machine.id, valve: valve).first
+    product_load.increment!(:poured)
+
+    head :ok, content_type: "text/html"
+  end
 
   def buy
     puts "enable me!"

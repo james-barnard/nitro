@@ -26,7 +26,9 @@ class ChargesController < ApplicationController
     card_service.charge
     VendingMachinePourService.enable(
       product_load.vending_machine.device_id,
-      product_load.valve)
+      product_load.valve
+    )
+    product_load.increment!(:enabled)
 
   rescue Stripe::CardError => e
     flash[:error] = e.message

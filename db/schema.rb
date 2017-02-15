@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170214210710) do
+ActiveRecord::Schema.define(version: 20170215171048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -170,6 +170,8 @@ ActiveRecord::Schema.define(version: 20170214210710) do
     t.datetime "updated_at",         null: false
     t.datetime "removed_at"
     t.integer  "valve"
+    t.integer  "enabled"
+    t.integer  "poured"
   end
 
   add_index "product_loads", ["local_product_id"], name: "index_product_loads_on_local_product_id", using: :btree

@@ -6,12 +6,20 @@ class ProductLoad < ActiveRecord::Base
 
   scope :active, -> { where(:removed_at => nil) }
 
+  def self.find_by_pour(vending_machine_id:, valve:)
+    where(vending_machine_id: vending_machine_id, valve: valve)
+  end
+
   def expiration
     date_loaded + 2.weeks
   end
 
   def days_remaining
     (expiration.to_date - Date.today).to_i
+  end
+
+  def pours_remaining
+    total_pours - poured
   end
 
   def display
