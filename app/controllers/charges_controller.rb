@@ -3,6 +3,7 @@ class ChargesController < ApplicationController
     @fbuser = FbUser.find params[:fbuser]
     @product_load = ProductLoad.find params[:product_load_id]
     @product = @product_load.local_product.product
+    @amount = ENV['MSRP']
   end
 
   def create

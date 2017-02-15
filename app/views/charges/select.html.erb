@@ -13,7 +13,7 @@
   <script src="https://checkout.stripe.com/checkout.js"></script>
   <%= hidden_field_tag 'stripeToken' %>
   <%= hidden_field_tag 'stripeEmail' %>
-  <button id="customButton" class="btn btn-large btn-primary">Buy Now $4.20</button>
+  <button id="customButton" class="btn btn-large btn-primary">Buy Now</button>
 
   <script>
     var handler = StripeCheckout.configure({
@@ -31,7 +31,7 @@
       handler.open({
         name: 'Nitro Kaffe',
         description: 'Nitro Kaffe No3',
-        amount: 420,
+        amount: <%= @amount.to_i %>,
         zipCode: true
       });
       e.preventDefault();
