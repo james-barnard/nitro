@@ -6,6 +6,8 @@ class VendingMachine < ActiveRecord::Base
   AMILLIONMILES = 999999
 
   scope :on_route, -> (route_id) { where(route_id: route_id.to_i) }
+  scope :vending, -> { where(mode: true) }
+  scope :free, -> { where(mode: false) }
 
   def to_label
     "id:#{id}-#{model}"
@@ -22,7 +24,7 @@ class VendingMachine < ActiveRecord::Base
     shortest_distance = AMILLIONMILES
     closest_machine = nil
 
-    all.each do |machine|
+    vending.each do |machine|
       distance = machine.distance_away(lat, long)
       if distance < shortest_distance
         shortest_distance = distance

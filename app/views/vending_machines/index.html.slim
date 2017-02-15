@@ -11,6 +11,7 @@
             th Model
             th Device Id
             th Firmware Version
+            th Vending Mode
             th Last Serviced
             th class="no-sort"
             th class="no-sort"
@@ -24,6 +25,7 @@
               td = vending_machine.model
               td = vending_machine.device_id
               td = vending_machine.firmware_version
+              td = vending_machine.mode
               td = vending_machine.last_serviced
               td class="no-sort"
                 = link_to 'Show', vending_machine
