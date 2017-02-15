@@ -12,6 +12,7 @@ gem 'therubyracer'
 gem "rmagick"
 gem "carrierwave"
 gem "stripe"
+gem "puma"
 
 gem 'jbuilder', '~> 2.0'
 group :development, :test do
