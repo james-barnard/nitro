@@ -44,7 +44,7 @@ module MenuHelper
       type: "web_url",
       url: link_to_buy(product_load_id, fb_user),
       messenger_extensions: true,
-      webview_height_ratio: "tall"
+      webview_height_ratio: "full"
       #,fallback_url: "https://peterssendreceiveapp.ngrok.io/"
     }
   end
