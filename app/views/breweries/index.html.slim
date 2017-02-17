@@ -17,7 +17,7 @@
             tr
               td = brewery.region.name
               td = brewery.name
-              td = brewery.name
+              td = brewery.try(:person).try(:name)
               td = link_to 'Show', brewery
               td = link_to 'Edit', edit_brewery_path(brewery)
               td = link_to 'Destroy', brewery, data: { confirm: 'Are you sure?' }, method: :delete

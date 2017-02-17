@@ -8,7 +8,7 @@ p
   = @brewery.name
 p
   strong> Person:
-  = @brewery.person.name
+  = @brewery.try(:person).try(:name)
 
 = link_to 'Edit', edit_brewery_path(@brewery)
 '|
