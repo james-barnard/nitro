@@ -1,5 +1,6 @@
 module ConversationHelper
   PHRASES = {
+    thanks: 'Thanks for dropping by!',
     just_chat: 'So, you just want to hang out and chat? Tell me what\'s on your mind.',
     ask_location: 'I would like to pour you some awesome coffee. Will you send me your location, please?',
     vm_address: 'It looks like you\'re at',

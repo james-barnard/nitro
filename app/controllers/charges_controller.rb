@@ -1,4 +1,9 @@
 class ChargesController < ApplicationController
+  def thanks
+    sender = params[:sender_id]
+    FacebookMessengerConversationService.new(sender).thank_you unless sender.nil?
+  end
+
   def select
     @fbuser = FbUser.find params[:fbuser]
     @product_load = ProductLoad.find params[:product_load_id]
@@ -11,9 +16,10 @@ class ChargesController < ApplicationController
     @amount = ENV['MSRP']
     @display_amount = "$#{@amount.to_i / 100}"
 
-    fb_user = FbUser.find params["fbuser"]["id"]
+    @fb_user = FbUser.find params["fbuser"]["id"]
+    @sender_id = @fb_user.sender_id
     product_load = ProductLoad.find params["product_load"]["id"]
-    product_load.purchases.create(fb_user_id: fb_user.id, pos_type: :stripe, amount: @amount)
+    product_load.purchases.create(fb_user_id: @fb_user.id, pos_type: :stripe, amount: @amount)
 
     card_service = CreditCardService.new({
       email: params[:stripeEmail],
@@ -21,7 +27,7 @@ class ChargesController < ApplicationController
       amount: @amount
     })
     customer = card_service.create_customer
-    fb_user.update(customer_id: customer.id)
+    @fb_user.update(customer_id: customer.id)
 
     card_service.charge
     VendingMachinePourService.enable(

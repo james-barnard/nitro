@@ -10,10 +10,9 @@ window.extAsyncInit = function() {
   $(function() {
     $("#closeButton").click(function() {
       MessengerExtensions.requestCloseBrowser(
-        function success() { },
-        function error(err) { }
+        function success() {},
+        function error(err) {}
       );
-      return false;
     });
   });
 };

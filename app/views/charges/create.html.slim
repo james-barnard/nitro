@@ -4,4 +4,4 @@
     p You paid #{@display_amount}
   - else
     p Your Nitro Kaffe brew was on us this time!
-  button type="button" class="chat-button" id="closeButton" Close
+  = link_to 'Close', charges_thanks_path(sender_id:@sender_id), {class:'chat-button', id:'closeButton'}
