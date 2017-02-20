@@ -6,7 +6,8 @@ class FbUser < ActiveRecord::Base
   LOCATION_TIMEOUT     = 900
 
   def ungreeted?
-    (Time.now - parts.last.try(:created_at)) > CONVERSATION_TIMEOUT
+    return true if parts.empty?
+    (Time.now - parts.last.created_at) > CONVERSATION_TIMEOUT
   end
 
   def not_located?
