@@ -41,5 +41,6 @@ module Nitro
     config.paths.add File.join("app", "bot"), glob: File.join("**","*.rb")
     config.autoload_paths += Dir[Rails.root.join("app", "bot", "*")]
     config.assets.initialize_on_precompile = false
+    config.assets.compile = true
   end
 end
