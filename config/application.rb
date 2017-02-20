@@ -42,5 +42,6 @@ module Nitro
     config.autoload_paths += Dir[Rails.root.join("app", "bot", "*")]
     config.assets.initialize_on_precompile = false
     config.assets.compile = true
+    config.assets.digest = true
   end
 end
