@@ -1,5 +1,5 @@
 .webview-font
-  = asset_path "/assets/cb-ty-page.png", class: "ty-image"
+  = image_tag "/assets/cb-ty-page.png", class: "ty-image"
   - if @amount.to_i > 0
     p You paid #{@display_amount}
   - else
