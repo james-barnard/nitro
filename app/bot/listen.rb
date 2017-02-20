@@ -58,7 +58,7 @@ end
 def connect_user_with_vending_machine(message, fb_user)
   @lat, @long = locate_user(message)
   machine = VendingMachine.nearest_machine(@lat, @long)
-  fb_user.update(pos_machine_id: machine.id, pos_confirmed: false)
+  fb_user.update(pos_machine_id: machine.try(:id), pos_confirmed: false)
 
   if machine.present?
     speak("#{PHRASES[:vm_address]} #{machine.display_address}", nil)
