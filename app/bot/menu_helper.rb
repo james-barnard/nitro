@@ -34,7 +34,7 @@ module MenuHelper
     puts "image_url: full_path(#{product_load.menu_thumb}),"
     {
       title:     title,
-      image_url: full_path(product_load.menu_thumb),
+      image_url: product_load.menu_thumb,
       default_action: default_action(product_load.id, fb_user)
     }
   end

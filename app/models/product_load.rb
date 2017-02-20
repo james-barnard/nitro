@@ -35,6 +35,6 @@ class ProductLoad < ActiveRecord::Base
   end
 
   def menu_thumb
-    local_product.product.thumbnail.url.to_s
+    local_product.product.thumbnail.url
   end
 end
