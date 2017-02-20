@@ -8,7 +8,6 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'jquery-ui-rails'
-gem 'therubyracer'
 gem "rmagick"
 gem "carrierwave"
 gem "stripe"
@@ -32,6 +31,7 @@ gem 'slim-rails'
 gem 'facebook-messenger', '~> 0.11.1'
 
 group :development do
+  gem 'therubyracer'
   gem 'better_errors'
   gem 'guard-bundler'
   gem 'guard-rails'
