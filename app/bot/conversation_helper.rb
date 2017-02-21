@@ -5,7 +5,7 @@ module ConversationHelper
     ask_location: 'I would like to pour you some awesome coffee. Will you send me your location, please?',
     vm_address: 'It looks like you\'re at',
     vm_confirm: 'Does this look like right?',
-    vm_no_machine: "I can't seem to find a NitroKaffe machine close to you"
+    vm_no_machine: "I can't seem to find a NitrøKaffe machine close to you"
   }.freeze
 
   TYPE_LOCATION = [

@@ -30,7 +30,7 @@ class CreditCardService
   def charge_attributes
     {
       customer:    customer.id,
-      description: 'Nitro Kaffe',
+      description: 'NitrøKaffe',
       currency:    'usd',
       amount:      amount
     }
