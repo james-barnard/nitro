@@ -16,9 +16,7 @@ def listen
     @sender_id = message.sender['id']
     fb_user = FbUser.find_or_create_by(sender_id: @sender_id)
 
-    if fb_user.id > 3 # TODO don't forget to git rid of this
-      puts "caught ya!"
-    elsif message_contains_location?(message)
+    if message_contains_location?(message)
       connect_user_with_vending_machine(message, fb_user)
     elsif message.quick_reply && message.quick_reply == "just_chat"
       puts "skipping location"
