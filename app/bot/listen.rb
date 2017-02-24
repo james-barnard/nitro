@@ -23,7 +23,7 @@ def listen
       fb_user.update(loc_skipped: true)
       speak(PHRASES[:just_chat], nil)
     elsif message.quick_reply && message.quick_reply == "no_location"
-      connect_user_with_vending_machine(message, fb_user)
+      speak(PHRASES[:vm_no_machine], nil)
     elsif message.quick_reply && message.quick_reply == "location_confirmed"
       puts "location confirmed!"
       if fb_user.pos_machine_id.present?
