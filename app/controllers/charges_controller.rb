@@ -24,12 +24,17 @@ class ChargesController < ApplicationController
     card_service = CreditCardService.new({
       email: params[:stripeEmail],
       source: params[:stripeToken],
+      customer_id: @fb_user.customer_id,
       amount: @amount
     })
-    customer = card_service.create_customer
-    @fb_user.update(customer_id: customer.id)
+
+    if @fb_user.customer_id.nil?
+      customer = card_service.create_customer
+      @fb_user.update(customer_id: customer.id)
+    end
 
     card_service.charge
+
     VendingMachinePourService.enable(
       product_load.vending_machine.device_id,
       product_load.valve
@@ -38,6 +43,6 @@ class ChargesController < ApplicationController
 
   rescue Stripe::CardError => e
     flash[:error] = e.message
-    redirect_to new_charge_path
+    redirect_to charges_select_path
   end
 end

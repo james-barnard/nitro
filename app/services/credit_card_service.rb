@@ -5,6 +5,7 @@ class CreditCardService
     @email  = params[:email]
     @source = params[:source]
     @amount = params[:amount]
+    @customer_id = params[:customer_id]
   end
 
   def charge
@@ -13,11 +14,12 @@ class CreditCardService
 
   def create_customer
     @customer = external_customer_service.create(customer_attributes)
+    @customer_id = customer.id
   end
 
   private
 
-  attr_reader :source, :amount, :email, :customer
+  attr_reader :source, :amount, :email, :customer, :customer_id
 
   def external_charge_service
     Stripe::Charge
@@ -29,7 +31,7 @@ class CreditCardService
 
   def charge_attributes
     {
-      customer:    customer.id,
+      customer:    customer_id,
       description: 'NitrøKaffe',
       currency:    'usd',
       amount:      amount
