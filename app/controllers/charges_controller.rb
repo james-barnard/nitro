@@ -28,7 +28,7 @@ class ChargesController < ApplicationController
       amount: @amount
     })
 
-    if @fb_user.customer_id.nil?
+    if @fb_user.customer_id.nil? || @fb_user.customer_id == 0
       customer = card_service.create_customer
       @fb_user.update(customer_id: customer.id)
     end

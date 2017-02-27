@@ -15,6 +15,7 @@ class CreditCardService
   def create_customer
     @customer = external_customer_service.create(customer_attributes)
     @customer_id = customer.id
+    @customer
   end
 
   private
