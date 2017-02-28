@@ -12,6 +12,7 @@ gem "rmagick"
 gem "carrierwave"
 gem "stripe"
 gem "puma"
+gem 'geocoder'
 
 gem 'jbuilder', '~> 2.0'
 group :development, :test do
