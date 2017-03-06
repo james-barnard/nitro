@@ -9,17 +9,23 @@ class CreditCardService
   end
 
   def charge
+    raise "no customer" if customer_id.nil?
     external_charge_service.create(charge_attributes)
   end
 
   def create_customer
+    return nil if email.empty? && source.empty?
     @customer = external_customer_service.create(customer_attributes)
     @customer_id = customer.id
     @customer
   end
 
-  private
+  def last4
+    return nil unless @customer
+    @customer.sources.data.first.last4
+  end
 
+  private
   attr_reader :source, :amount, :email, :customer, :customer_id
 
   def external_charge_service

@@ -7,12 +7,15 @@ $(function(d, s, id){
 }(document, 'script', 'Messenger'));
 
 window.extAsyncInit = function() {
-  $(function() {
-    $("#closeButton").click(function() {
-      MessengerExtensions.requestCloseBrowser(
-        function success() {},
-        function error(err) {}
-      );
-    });
+  alert("messenger extensions loaded");
+
+  $("#closeButton").click(function() {
+    MessengerExtensions.requestCloseBrowser(
+      function success() {
+        alert("succeeded");},
+      function error(err) {
+        alert(err);}
+    );
   });
+
 };

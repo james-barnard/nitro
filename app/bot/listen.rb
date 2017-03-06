@@ -9,47 +9,66 @@ REVERSE_API_URL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.fr
 
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
-def listen
-  Bot.on :message do |message|
-    puts "Received '#{message.inspect}' from #{message.sender}" # debug only
+Bot.on :postback do |postback|
+  puts "Postback received '#{postback.inspect}' from #{postback.sender}" # debug only
+  @sender_id = postback.sender['id']
+  fb_user = FbUser.find_or_create_by(sender_id: @sender_id)
 
-    @sender_id = message.sender['id']
-    fb_user = FbUser.find_or_create_by(sender_id: @sender_id)
+  case postback.payload
+  when /CHOICES/
+    speak(PHRASES[:ask_location], TYPE_LOCATION)
+  end
+end
 
-    if message_contains_location?(message)
-      connect_user_with_vending_machine(message, fb_user)
-    elsif message.quick_reply && message.quick_reply == "just_chat"
-      puts "skipping location"
-      fb_user.update(loc_skipped: true)
-      speak(PHRASES[:just_chat], nil)
-    elsif message.quick_reply && message.quick_reply == "no_location"
-      speak(PHRASES[:vm_no_machine], nil)
-    elsif message.quick_reply && message.quick_reply == "location_confirmed"
-      puts "location confirmed!"
-      if fb_user.pos_machine_id.present?
-        fb_user.update(pos_confirmed: true)
-      end
-      display_menu(message, fb_user)
-    elsif fb_user.ungreeted?
-      update_user_profile(fb_user)
-      greet_user(fb_user, message.text)
-      speak(PHRASES[:ask_location], TYPE_LOCATION)
-      fb_user.update(loc_skipped: false)
-    elsif fb_user.not_located?
-      speak(PHRASES[:ask_location], TYPE_LOCATION)
-    elsif
-      case message.text
-      when /hello/i
-        greet_user(fb_user, message.text)
-      when /menu/i
-        display_menu(message, fb_user)
-      else
-        greet_user(fb_user, message.text)
-        puts "huh?"
-      end
+Bot.on :message do |message|
+  puts "Message received '#{message.inspect}' from #{message.sender}" # debug only
+
+  @sender_id = message.sender['id']
+  fb_user = FbUser.find_or_create_by(sender_id: @sender_id)
+
+  if message_contains_location?(message)
+    connect_user_with_vending_machine(message, fb_user)
+  elsif message.quick_reply && message.quick_reply == "just_chat"
+    puts "skipping location"
+    fb_user.update(loc_skipped: true)
+    speak(PHRASES[:just_chat], nil)
+  elsif message.quick_reply && message.quick_reply == "the_usual"
+    speak(PHRASES[:vm_no_machine], nil)
+  elsif message.quick_reply && message.quick_reply == "no_location"
+    speak(PHRASES[:vm_no_machine], nil)
+  elsif message.quick_reply && message.quick_reply == "location_confirmed"
+    puts "location confirmed!"
+    if fb_user.pos_machine_id.present?
+      fb_user.update(pos_confirmed: true)
     end
+    display_menu(message, fb_user)
+  elsif fb_user.ungreeted?
+    start_conversation(message, fb_user)
+  elsif fb_user.not_located?
+    speak(PHRASES[:ask_location], TYPE_LOCATION)
+  elsif
+    case message.text
+    when /hello/i
+      greet_user(fb_user, message.text)
+    when /menu/i
+      display_menu(message, fb_user)
+    else
+      greet_user(fb_user, message.text)
+      puts "huh?"
+    end
+  end
 
-    create_part(message.messaging["message"], fb_user)
+  create_part(message.messaging["message"], fb_user)
+end
+
+def start_conversation(message, fb_user)
+  update_user_profile(fb_user)
+  greet_user(fb_user, message.text)
+  if fb_user.repeat_customer?
+    display_choices(message, fb_user, PHRASES[:welcome_back])
+  else
+    prompt_for_location(fb_user)
+    fb_user.update(loc_skipped: false)
   end
 end
 
@@ -83,12 +102,35 @@ def locate_user(message)
 end
 
 def display_menu(message, fb_user)
-  if fb_user.pos_machine_id.present?
-    machine = VendingMachine.find(fb_user.pos_machine_id)
-    product_loads = machine.current_load
-    mnu_elements = product_loads.map {|pl| mnu_element(pl.menu_name, pl, fb_user)}
-    message.reply(product_menu(mnu_elements)) unless mnu_elements.empty?
-  end
+  FacebookMessengerConversationService.new(@sender_id).display_menu(message, fb_user)
+end
+
+def display_choices(message, fb_user, text)
+    message.reply(choices(fb_user, text))
+end
+
+def choices(fb_user, text)
+  {
+    attachment:{
+      type:"template",
+      payload:{
+        template_type:"button",
+        text:text,
+        buttons:[
+          {
+            type:"web_url",
+            url:link_to_confirm(fb_user),
+            title:"The Usual"
+          },
+          {
+            type:"postback",
+            title:"Give Me Choices",
+            payload:"CHOICES"
+          }
+        ]
+      }
+    }
+  }
 end
 
 def update_user_profile(fb_user)
@@ -107,5 +149,3 @@ end
 def user_profile_api(sender_id)
   "https://graph.facebook.com/v2.6/#{sender_id}?access_token=#{ENV['PAGE_ACCESS_TOKEN']}"
 end
-
-listen

@@ -1,6 +1,11 @@
 .webview-font {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 28;
+  p.fields textarea {
+    vertical-align: middle;
+    float: right;
+  }
+
 }
 .product-card {
   margin-top: -5px;
@@ -22,15 +27,4 @@
   color: white;
   background: rgb(59,114,255); /* Old browsers */
   text-decoration: none;
-}
-#buyButton {
-  float: right;
-  line-height: 35px;
-  font-size: 30px;
-  border-radius: 6px;
-  moz-border-radius: 6px;
-  webkit-border-radius: 6px;
-  border:2px #245ec6 solid;
-  color: white;
-  background: rgb(59,114,255); /* Old browsers */
 }

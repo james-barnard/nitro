@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   get 'charges/select'
   get 'charges/thanks'
+  get 'charges/confirm'
+  get 'charges/menu'
 
   get 'route_man/refresh'
   get 'route_man/calc'

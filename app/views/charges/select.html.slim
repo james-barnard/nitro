@@ -1,0 +1,36 @@
+.webview-font
+  = form_tag charges_path, id: 'chargeForm' do
+    - if flash[:error].present?
+        p = flash[:error]
+    end
+
+    - if @product
+      = image_tag(@product.image.url, class: 'product-card')
+      = hidden_field_tag('fbuser', @fbuser.id)
+      = hidden_field_tag('product_load', @product_load.id)
+      = hidden_field_tag('amount', @amount.to_i)
+    end
+    = hidden_field_tag 'stripeToken'
+    = hidden_field_tag 'stripeEmail'
+    button id='buyButton' class='chat-button' Buy Now
+
+    javascript:
+      var handler = StripeCheckout.configure({
+        key: Rails.configuration.stripe[:publishable_key],
+        image: 'https://s3.us-east-2.amazonaws.com/nitro-kaffe-chatbot-images/nkLOGOblue.png',
+        token: function(token, args) {
+          document.getElementById('stripeToken').value = token.id;
+          document.getElementById('stripeEmail').value = token.email;
+          document.getElementById('chargeForm').submit();
+        }
+      });
+
+      $('#buyButton').click(function(e) {
+        handler.open({
+          name: 'NitrøKaffe',
+          description: 'NitrøKaffe pour',
+          amount: = @amount.to_i,
+          zipCode: true
+        });
+        e.preventDefault();
+      });

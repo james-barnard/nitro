@@ -1,6 +1,7 @@
 module ConversationHelper
   PHRASES = {
     thanks: 'Thanks for dropping by!',
+    welcome_back: 'It\'s good to see you again! Just click on the usual if you want the same brew from the same machine and pay with the same card.',
     just_chat: 'So, you just want to hang out and chat? Tell me what\'s on your mind.',
     ask_location: 'I would like to pour you some awesome coffee. Will you send me your location, please?',
     vm_address: 'It looks like you\'re at',
@@ -31,6 +32,19 @@ module ConversationHelper
     }
   ]
 
+  THE_USUAL = [
+    {
+      content_type: 'text',
+      title:        'THE USUAL',
+      payload:      'the_usual'
+    },
+    {
+      content_type: 'text',
+      title:        'Give me choices',
+      payload:      'prompt_me'
+    }
+  ]
+
   GREETINGS = [
     'Hi there!',
     'Hey!',
@@ -58,6 +72,16 @@ module ConversationHelper
     name = fb_user.first_name
     prefix = GREETINGS[rand(GREETINGS.size)]
     name.nil? ? prefix : prefix.insert(-2, " #{name}")
+  end
+
+  def prompt_for_the_usual(fb_user)
+    speak(PHRASES[:welcome_back], THE_USUAL)
+  end
+
+  def prompt_for_location(fb_user)
+    options = TYPE_LOCATION
+    options += THE_USUAL if fb_user.repeat_customer?
+    speak(PHRASES[:ask_location], options)
   end
 
   def create_part(message, fb_user)
