@@ -31,15 +31,16 @@ module MenuHelper
   end
 
   def mnu_element(title, product_load, fb_user)
-    puts "image_url: full_path(#{product_load.menu_thumb}),"
+    puts "image_url: #{full_path(product_load.menu_thumb)}"
     {
       title:     title,
-      image_url: product_load.menu_thumb,
+      image_url: full_path(product_load.menu_thumb), # todo fix this for production
       default_action: default_action(product_load.id, fb_user)
     }
   end
 
   def default_action(product_load_id, fb_user)
+    puts "link_to_buy: #{link_to_buy(product_load_id, fb_user)}"
     {
       type: "web_url",
       url: link_to_buy(product_load_id, fb_user),
@@ -55,6 +56,10 @@ module MenuHelper
       title: "I want #{product}",
       payload: "BUY#{product}"
     }
+  end
+
+  def link_to_confirm(fb_user)
+    full_path("charges/confirm?fbuser=#{fb_user.id}")
   end
 
   def link_to_buy(product_load_id, fb_user)
