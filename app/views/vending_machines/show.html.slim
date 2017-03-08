@@ -21,6 +21,11 @@ p
 p
   strong> Last serviced:
   = @vending_machine.last_serviced
+- if @free_periods
+  ul
+    strong> Free Periods:
+    - @free_periods.each do |p|
+      li = start_end(p)
 
 = link_to 'Edit', edit_vending_machine_path(@vending_machine)
 '|

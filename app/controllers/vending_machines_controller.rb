@@ -11,6 +11,7 @@ class VendingMachinesController < ApplicationController
   # GET /vending_machines/1
   # GET /vending_machines/1.json
   def show
+    @free_periods = @vending_machine.free_periods.sort {|p,q| p.start_time.hour <=> q.start_time.hour}
   end
 
   # GET /vending_machines/new
@@ -70,6 +71,16 @@ class VendingMachinesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def vending_machine_params
-      params.require(:vending_machine).permit(:model, :firmware_version, :location_id, :route_id, :owner, :last_serviced, :device_id, :mode)
+      params.require(:vending_machine).permit(
+        :model,
+        :firmware_version,
+        :location_id,
+        :route_id,
+        :owner,
+        :last_serviced,
+        :device_id,
+        :mode,
+        free_periods_attributes: [:id, :note, :start_time, :end_time]
+      )
     end
 end

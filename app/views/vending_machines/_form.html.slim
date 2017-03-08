@@ -10,6 +10,9 @@
     = f.association :route
     = f.input :owner
     = f.input :last_serviced
+    = f.fields_for :free_periods do |period|
+      == render 'free_period_fields', f: period
+    = link_to_add_fields "Add Free Period", f, :free_periods
 
   .form-actions
     = f.button :submit

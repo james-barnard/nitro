@@ -7,7 +7,7 @@ class ParticleController < ApplicationController
     valve  = params["data"][-1].to_i
     puts "poured from valve: #{valve} on machine: #{machine.model}"
     product_load = ProductLoad.find_by_pour(vending_machine_id: machine.id, valve: valve).first
-    product_load.increment!(:poured)
+    product_load.increment!(:poured) unless product_load.nil?
 
     head :ok, content_type: "text/html"
   end

@@ -1,0 +1,6 @@
+= field_set_tag 'Free Period', class: 'well'
+  = f.input :note, input_html: {maxlength: 16, size: 16}
+  = f.input :start_time, as: :text, input_html: {maxlength: 6, size: 10}
+  = f.input :end_time, as: :text, input_html: {maxlength: 6, size: 10}
+  = f.hidden_field :_destroy
+  = link_to "Remove Free Period", '#', class: "remove_fields"

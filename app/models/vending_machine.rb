@@ -3,6 +3,8 @@ class VendingMachine < ActiveRecord::Base
   belongs_to :route
   has_many :local_products, through: :product_loads
   has_many :product_loads
+  has_many :free_periods
+  accepts_nested_attributes_for :free_periods, allow_destroy: true
   AMILLIONMILES = 999999
 
   scope :on_route, -> (route_id) { where(route_id: route_id.to_i) }
@@ -46,5 +48,11 @@ class VendingMachine < ActiveRecord::Base
     dx = location.lat.to_f - lat
     dy = location.long.to_f - long
     Math.sqrt(dx**2 + dy**2)
+  end
+
+  def free_at?(time)
+    free_periods.any? do |period|
+      period.contains? time
+    end
   end
 end

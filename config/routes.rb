@@ -17,7 +17,9 @@ Rails.application.routes.draw do
   root to: 'visitors#index'
   resources :consumer_purchases
   resources :product_loads
-  resources :vending_machines
+  resources :vending_machines do
+    resources :free_periods
+  end
   resources :routes
   resources :owners
   resources :local_products

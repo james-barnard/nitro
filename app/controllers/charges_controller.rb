@@ -12,13 +12,14 @@ class ChargesController < ApplicationController
   end
 
   def create
-    # Amount in cents
-    @amount = ENV['MSRP']
     @display_amount = "$#{@amount.to_i / 100}"
 
     @fb_user = FbUser.find params["fbuser"]["id"]
     @sender_id = @fb_user.sender_id
     product_load = ProductLoad.find params["product_load"]["id"]
+    machine = product_load.vending_machine
+    @amount = price(machine)
+
     product_load.purchases.create(fb_user_id: @fb_user.id, pos_type: :stripe, amount: @amount)
 
     card_service = CreditCardService.new({
@@ -33,7 +34,7 @@ class ChargesController < ApplicationController
       @fb_user.update(customer_id: customer.id)
     end
 
-    card_service.charge
+    card_service.charge unless price == 0
 
     VendingMachinePourService.enable(
       product_load.vending_machine.device_id,
@@ -44,5 +45,11 @@ class ChargesController < ApplicationController
   rescue Stripe::CardError => e
     flash[:error] = e.message
     redirect_to charges_select_path
+  end
+
+  def price(machine)
+    @amount = ENV['MSRP']
+
+    @amount = machine.free_at?(Time.now) ? 0 : @amount
   end
 end

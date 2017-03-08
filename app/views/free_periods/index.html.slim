@@ -1,0 +1,20 @@
+.container-fluid
+  .row
+    h1 Free Periods
+    .column
+      table class="table" id="free_periods"
+        thead
+          tr
+            th Name
+            th start_time
+            th end_time
+
+        tbody
+          - @free_periods.each do |free_period|
+            tr
+              td = free_period.note
+              td = free_period.start_time
+              td = free_period.end_time
+
+    br
+
