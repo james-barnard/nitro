@@ -5,9 +5,11 @@ class ParticleController < ApplicationController
   def pour
     machine = VendingMachine.find_by_device_id params["device_id"]
     valve  = params["data"][-1].to_i
-    puts "poured from valve: #{valve} on machine: #{machine.model}"
-    product_load = ProductLoad.find_by_pour(vending_machine_id: machine.id, valve: valve).first
-    product_load.increment!(:poured) unless product_load.nil?
+    unless machine.nil? || valve.nil?
+      puts "poured from valve: #{valve} on machine: #{machine.model}"
+      product_load = ProductLoad.find_by_pour(vending_machine_id: machine.id, valve: valve).first
+      product_load.increment!(:poured) unless product_load.nil?
+    end
 
     head :ok, content_type: "text/html"
   end

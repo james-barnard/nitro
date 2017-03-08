@@ -80,7 +80,7 @@ class VendingMachinesController < ApplicationController
         :last_serviced,
         :device_id,
         :mode,
-        free_periods_attributes: [:id, :note, :start_time, :end_time]
+        free_periods_attributes: [:id, :note, :start_time, :end_time, :_destroy]
       )
     end
 end

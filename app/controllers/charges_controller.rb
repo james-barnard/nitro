@@ -8,7 +8,9 @@ class ChargesController < ApplicationController
     @fbuser = FbUser.find params[:fbuser]
     @product_load = ProductLoad.find params[:product_load_id]
     @product = @product_load.local_product.product
-    @amount = ENV['MSRP']
+    machine = @product_load.vending_machine
+    @amount = price(machine)
+    puts "select: amount: #{@amount}"
   end
 
   def create
@@ -34,7 +36,7 @@ class ChargesController < ApplicationController
       @fb_user.update(customer_id: customer.id)
     end
 
-    card_service.charge unless price == 0
+    card_service.charge unless @amount == 0
 
     VendingMachinePourService.enable(
       product_load.vending_machine.device_id,
