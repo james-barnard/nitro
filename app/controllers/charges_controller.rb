@@ -36,7 +36,7 @@ class ChargesController < ApplicationController
       @fb_user.update(customer_id: customer.id)
     end
 
-    card_service.charge unless @amount == 0
+    card_service.charge unless @amount.to_i == 0
 
     VendingMachinePourService.enable(
       product_load.vending_machine.device_id,
