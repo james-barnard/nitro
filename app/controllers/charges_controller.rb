@@ -14,13 +14,13 @@ class ChargesController < ApplicationController
   end
 
   def create
-    @display_amount = "$#{@amount.to_i / 100}"
-
     @fb_user = FbUser.find params["fbuser"]["id"]
     @sender_id = @fb_user.sender_id
     product_load = ProductLoad.find params["product_load"]["id"]
     machine = product_load.vending_machine
     @amount = price(machine)
+    @display_amount = "$#{@amount.to_i / 100}"
+
 
     product_load.purchases.create(fb_user_id: @fb_user.id, pos_type: :stripe, amount: @amount)
 
