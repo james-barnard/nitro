@@ -19,7 +19,7 @@ class ChargesController < ApplicationController
     product_load = ProductLoad.find params["product_load"]["id"]
     machine = product_load.vending_machine
     @amount = price(machine)
-    @display_amount = "$#{@amount.to_i / 100}"
+    @display_amount = "$#{@amount.to_f / 100}"
 
 
     product_load.purchases.create(fb_user_id: @fb_user.id, pos_type: :stripe, amount: @amount)
