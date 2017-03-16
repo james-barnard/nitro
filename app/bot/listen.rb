@@ -17,6 +17,8 @@ Bot.on :postback do |postback|
   case postback.payload
   when /CHOICES/
     speak(PHRASES[:ask_location], TYPE_LOCATION)
+  else
+    puts "got a postback we didn't expect: #{postback.payload}"
   end
 end
 
@@ -33,7 +35,8 @@ Bot.on :message do |message|
     fb_user.update(loc_skipped: true)
     speak(PHRASES[:just_chat], nil)
   elsif message.quick_reply && message.quick_reply == "the_usual"
-    speak(PHRASES[:vm_no_machine], nil)
+    speak(PHRASES[:the_usual], nil)
+    confirm_the_usual(message, fb_user)
   elsif message.quick_reply && message.quick_reply == "no_location"
     speak(PHRASES[:vm_no_machine], nil)
   elsif message.quick_reply && message.quick_reply == "location_confirmed"
@@ -72,13 +75,27 @@ def start_conversation(message, fb_user)
   end
 end
 
+def confirm_the_usual(message, fb_user)
+  say_location(fb_user.pos_machine_id)
+  say_card(fb_user.last4)
+  display_menu(message, fb_user)
+end
+
+def say_card(card)
+    speak("#{PHRASES[:last4]} #{card}", nil)
+end
+
+def say_location(machine)
+    speak("#{PHRASES[:vm_address]} #{machine.display_address}", nil)
+end
+
 def connect_user_with_vending_machine(message, fb_user)
   @lat, @long = locate_user(message)
   machine = VendingMachine.nearest_machine(@lat, @long)
   fb_user.update(pos_machine_id: machine.try(:id), pos_confirmed: false)
 
   if machine.present?
-    speak("#{PHRASES[:vm_address]} #{machine.display_address}", nil)
+    say_location(machine)
     speak(PHRASES[:vm_confirm], CONFIRM_LOCATION)
   else
     speak(PHRASES[:vm_no_machine], nil)

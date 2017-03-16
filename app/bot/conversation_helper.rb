@@ -1,5 +1,6 @@
 module ConversationHelper
   PHRASES = {
+    the_usual: 'If my memory is correct, just select a product from the menu.',
     thanks: 'Thanks for dropping by!',
     welcome_back: 'It\'s good to see you again! Just click on the usual if you want the same brew from the same machine and pay with the same card.',
     just_chat: 'So, you just want to hang out and chat? Tell me what\'s on your mind.',
