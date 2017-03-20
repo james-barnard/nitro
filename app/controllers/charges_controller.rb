@@ -30,12 +30,9 @@ class ChargesController < ApplicationController
   end
 
   def create
-    @amount = ENV['MSRP']
-    @display_amount = "$#{@amount.to_i / 100}"
-
-    @fb_user = FbUser.find params["fbuser"]
+    @fb_user = FbUser.find params["fbuser"]["id"]
     @sender_id = @fb_user.sender_id
-    product_load = ProductLoad.find params["product_load"]
+    product_load = ProductLoad.find params["product_load"]["id"]
     machine = product_load.vending_machine
     @amount = price(machine)
     @display_amount = "$#{@amount.to_f / 100}"

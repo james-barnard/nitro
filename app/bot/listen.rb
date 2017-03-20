@@ -15,6 +15,8 @@ Bot.on :postback do |postback|
   fb_user = FbUser.find_or_create_by(sender_id: @sender_id)
 
   case postback.payload
+  when /THE_USUAL/
+    confirm_the_usual(postback, fb_user)
   when /CHOICES/
     speak(PHRASES[:ask_location], TYPE_LOCATION)
   else
@@ -34,9 +36,6 @@ Bot.on :message do |message|
     puts "skipping location"
     fb_user.update(loc_skipped: true)
     speak(PHRASES[:just_chat], nil)
-  elsif message.quick_reply && message.quick_reply == "the_usual"
-    speak(PHRASES[:the_usual], nil)
-    confirm_the_usual(message, fb_user)
   elsif message.quick_reply && message.quick_reply == "no_location"
     speak(PHRASES[:vm_no_machine], nil)
   elsif message.quick_reply && message.quick_reply == "location_confirmed"
@@ -76,17 +75,30 @@ def start_conversation(message, fb_user)
 end
 
 def confirm_the_usual(message, fb_user)
-  say_location(fb_user.pos_machine_id)
-  say_card(fb_user.last4)
+  speak(confirmation_msg(message, fb_user), nil)
   display_menu(message, fb_user)
+end
+
+def confirmation_msg(message, fb_user)
+  ["#{PHRASES[:the_usual]} #{machine(fb_user).display_address}",
+  "#{PHRASES[:last4]} #{credit_card(fb_user.last4)}",
+  PHRASES[:select_from_menu]].join "\u000A"
 end
 
 def say_card(card)
     speak("#{PHRASES[:last4]} #{card}", nil)
 end
 
+def credit_card(number)
+  "**** **** **** #{number}"
+end
+
 def say_location(machine)
     speak("#{PHRASES[:vm_address]} #{machine.display_address}", nil)
+end
+
+def machine(user)
+  VendingMachine.find(user.pos_machine_id)
 end
 
 def connect_user_with_vending_machine(message, fb_user)
@@ -135,9 +147,9 @@ def choices(fb_user, text)
         text:text,
         buttons:[
           {
-            type:"web_url",
-            url:link_to_confirm(fb_user),
-            title:"The Usual"
+            type:"postback",
+            title:"The Usual",
+            payload:"THE_USUAL"
           },
           {
             type:"postback",
@@ -151,10 +163,6 @@ def choices(fb_user, text)
 end
 
 def update_user_profile(fb_user)
-  user_profile(fb_user)
-end
-
-def user_profile(fb_user)
   response = HTTParty.get(user_profile_api(fb_user.sender_id))
   parsed = JSON.parse(response.body)
   fb_user.update(
