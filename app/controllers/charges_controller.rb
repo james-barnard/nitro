@@ -30,9 +30,9 @@ class ChargesController < ApplicationController
   end
 
   def create
-    @fb_user = FbUser.find params["fbuser"]["id"]
+    @fb_user = FbUser.find params["fbuser"]
     @sender_id = @fb_user.sender_id
-    product_load = ProductLoad.find params["product_load"]["id"]
+    product_load = ProductLoad.find params["product_load"]
     machine = product_load.vending_machine
     @amount = price(machine)
     @display_amount = "$#{@amount.to_f / 100}"

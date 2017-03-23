@@ -37,9 +37,9 @@ module ConversationHelper
 
   THE_USUAL = [
     {
-      content_type: 'text',
       title:        'THE USUAL',
-      payload:      'the_usual'
+      type:"web_url",
+      url:link_to_confirm(fb_user)
     },
     {
       content_type: 'text',
