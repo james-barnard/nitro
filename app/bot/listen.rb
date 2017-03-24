@@ -147,9 +147,11 @@ def choices(fb_user, text)
         text:text,
         buttons:[
           {
-            type:"postback",
-            title:"The Usual",
-            payload:"THE_USUAL"
+            title: 'THE USUAL',
+            type:  'web_url',
+            url:   link_to_confirm(fb_user),
+            messenger_extensions: true,
+            webview_height_ratio: "full"
           },
           {
             type:"postback",
@@ -165,6 +167,7 @@ end
 def update_user_profile(fb_user)
   response = HTTParty.get(user_profile_api(fb_user.sender_id))
   parsed = JSON.parse(response.body)
+  puts "update_user_profile: #{parsed}"
   fb_user.update(
     first_name: parsed["first_name"],
     last_name: parsed["last_name"]

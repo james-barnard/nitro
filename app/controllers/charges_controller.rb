@@ -17,7 +17,9 @@ class ChargesController < ApplicationController
     @product_load = @fbuser.purchases.last.product_load
     @product = @product_load.local_product.product
     @location = @product_load.vending_machine.location.concise_address
-    @amount = ENV['MSRP']
+    machine = @product_load.vending_machine
+    @amount = price(machine)
+    @display_amount = "$#{@amount.to_f / 100}"
   end
 
   def select
@@ -26,6 +28,7 @@ class ChargesController < ApplicationController
     @product = @product_load.local_product.product
     machine = @product_load.vending_machine
     @amount = price(machine)
+    @display_amount = "$#{@amount.to_f / 100}"
     puts "select: amount: #{@amount}"
   end
 

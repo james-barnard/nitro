@@ -16,5 +16,29 @@
     = hidden_field_tag 'product_load', @product_load.id
 
     = link_to 'Menu', charges_menu_path(sender_id:@fbuser.sender_id), {id:'closeButton', class:'chat-button'}
-    = submit_tag 'Confirm', class:'chat-button'
-    /* button id="buyButton" class="chat-button" name="commit" value="confirm" Confirm */
+    button id="buyButton" class="chat-button" Confirm
+
+  javascript:
+    $(function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.com/en_US/messenger.Extensions.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'Messenger'));
+
+    window.extAsyncInit = function() {
+      $("#closeButton").click(function() {
+        MessengerExtensions.requestCloseBrowser(
+          function success() {
+            alert("succeeded");},
+          function error(err) {
+            alert("error closing webview: " + err);}
+        );
+      });
+    };
+
+    $('#buyButton').click(function() {
+      $("#chargeForm").submit();
+      preventDefault();
+    });

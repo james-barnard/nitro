@@ -13,7 +13,7 @@
     script src="https://checkout.stripe.com/checkout.js"
     = hidden_field_tag 'stripeToken'
     = hidden_field_tag 'stripeEmail'
-    button id='buyButton' class='chat-button' Buy Now
+    button id='buyButton' class='chat-button' "Buy Now"
 
     javascript:
       - if @amount.to_i > 50 %> // .50 is the smallest charge - so free if less than 50
