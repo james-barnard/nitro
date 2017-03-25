@@ -16,6 +16,13 @@
     button id='buyButton' class='chat-button' "Buy Now"
 
     javascript:
+      var loader = function(){
+          $.loader({
+              className:"blue-with-image-2",
+              content:''
+          });
+      };
+
       - if @amount.to_i > 50 %> // .50 is the smallest charge - so free if less than 50
         var handler = StripeCheckout.configure({
           key: Rails.configuration.stripe[:publishable_key],
@@ -28,6 +35,7 @@
         });
 
         $('#buyButton').click(function(e) {
+          loader();
           handler.open({
             name: 'NitrøKaffe',
             description: 'NitrøKaffe pour',
@@ -38,6 +46,7 @@
         });
       - else
         $('#buyButton').click(function() {
+          loader();
           $("#chargeForm").submit();
           preventDefault();
         }
