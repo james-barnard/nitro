@@ -8,6 +8,7 @@ html lang="en"
     meta name="description" content="#{content_for?(:description) ? yield(:description) : 'NitrøKaffe'}"
     script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-1.12.4.min.js"
     script type="text/javascript" charset="utf8" src="https://checkout.stripe.com/checkout.js"
+    == javascript_include_tag "jquery.loader.js"
     == stylesheet_link_tag "charges"
   body
     == yield

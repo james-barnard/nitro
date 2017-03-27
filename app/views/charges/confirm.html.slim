@@ -38,7 +38,8 @@
       });
     };
 
-    $('#buyButton').click(function() {
+    $('#buyButton').click(function(e) {
+      $.loader({ className:"blue-with-image-2", content:'' });
       $("#chargeForm").submit();
-      preventDefault();
+      e.preventDefault();
     });
