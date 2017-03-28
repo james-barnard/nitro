@@ -168,10 +168,14 @@ def update_user_profile(fb_user)
   response = HTTParty.get(user_profile_api(fb_user.sender_id))
   parsed = JSON.parse(response.body)
   puts "update_user_profile: #{parsed}"
-  fb_user.update(
-    first_name: parsed["first_name"],
-    last_name: parsed["last_name"]
-  ) unless parsed["error"]
+  if parsed["error"]
+    puts "error updating user profile: #{parsed['error']}"
+  else
+    fb_user.update(
+      first_name: parsed["first_name"],
+      last_name: parsed["last_name"]
+    )
+  end
 end
 
 def user_profile_api(sender_id)
