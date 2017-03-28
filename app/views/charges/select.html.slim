@@ -14,37 +14,33 @@
     = hidden_field_tag 'stripeToken'
     = hidden_field_tag 'stripeEmail'
     button id='buyButton' class='chat-button' Buy Now
+  #loader Brewing
 
-    javascript:
-      var wait = function(){
-        $.loader({ className:"blue-with-image-2", content:'' });
-      };
+  javascript:
+    if (#{@amount.to_i > 50}) {
+      var handler = StripeCheckout.configure({
+        key: "#{Rails.configuration.stripe[:publishable_key]}",
+        image: 'https://s3.us-east-2.amazonaws.com/nitro-kaffe-chatbot-images/nkLOGOblue.png',
+        token: function(token, args) {
+          document.getElementById('stripeToken').value = token.id;
+          document.getElementById('stripeEmail').value = token.email;
+          document.getElementById('chargeForm').submit();
+        }
+      });
 
-      if (#{@amount.to_i > 50}) {
-        var handler = StripeCheckout.configure({
-          key: "#{Rails.configuration.stripe[:publishable_key]}",
-          image: 'https://s3.us-east-2.amazonaws.com/nitro-kaffe-chatbot-images/nkLOGOblue.png',
-          token: function(token, args) {
-            document.getElementById('stripeToken').value = token.id;
-            document.getElementById('stripeEmail').value = token.email;
-            document.getElementById('chargeForm').submit();
-          }
+      $('#buyButton').click(function(e) {
+        handler.open({
+          name: 'NitrøKaffe',
+          description: 'NitrøKaffe pour',
+          amount: #{@amount.to_i},
+          zipCode: true
         });
-
-        $('#buyButton').click(function(e) {
-          wait();
-          handler.open({
-            name: 'NitrøKaffe',
-            description: 'NitrøKaffe pour',
-            amount: #{@amount.to_i},
-            zipCode: true
-          });
-          e.preventDefault();
-        });
-      } else {
-        $('#buyButton').click(function(e) {
-          wait();
-          $("#chargeForm").submit();
-          e.preventDefault();
-        });
-      };
+        e.preventDefault();
+      });
+    } else {
+      $('#buyButton').click(function(e) {
+        $("#loader").toggle();
+        $("#chargeForm").submit();
+        e.preventDefault();
+      });
+    };
