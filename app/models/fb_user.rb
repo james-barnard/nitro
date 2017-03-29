@@ -10,6 +10,10 @@ class FbUser < ActiveRecord::Base
     (Time.now - parts.last.created_at) > CONVERSATION_TIMEOUT
   end
 
+  def repeat_customer?
+    purchases.present? && pos_machine_id && customer_id
+  end
+
   def not_located?
     return false if loc_skipped == true
     last_location = parts.where(part_type: "location").last

@@ -1,0 +1,47 @@
+.webview-font
+  = form_tag charges_path, id: 'chargeForm' do
+    - if flash[:error].present?
+        p = flash[:error]
+    end
+
+    = image_tag(@product.thumbnail.url, class: 'product-card')
+    p.field
+      = label_tag 'You are here:'
+      = text_area_tag 'Location', @location, size: '17x2'
+    p.field
+      = label_tag 'Pay with card:'
+      = text_area_tag 'payment', credit_card(@fbuser.try(:last4)), size: '15x1'
+
+    = hidden_field_tag 'fbuser', @fbuser.id
+    = hidden_field_tag 'product_load', @product_load.id
+
+    p.clear
+    button id='buyButton' class='chat-button right' Buy with Card
+    = link_to 'Give me a Menu', charges_menu_path(sender_id:@fbuser.sender_id), {id:'closeButton', class:'chat-button right'}
+  #loader Brewing
+
+  javascript:
+    $(function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.com/en_US/messenger.Extensions.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'Messenger'));
+
+    window.extAsyncInit = function() {
+      $("#closeButton").click(function() {
+        MessengerExtensions.requestCloseBrowser(
+          function success() {
+            alert("succeeded");},
+          function error(err) {
+            alert("error closing webview: " + err);}
+        );
+      });
+    };
+
+    $('#buyButton').click(function(e) {
+      $("#loader").toggle();
+      $("#chargeForm").submit();
+      e.preventDefault();
+    });
