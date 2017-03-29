@@ -15,4 +15,3 @@
 //= require dataTables/jquery.dataTables
 //= require bootstrap-sprockets
 //= require_tree .
-//= require jquery.loader
