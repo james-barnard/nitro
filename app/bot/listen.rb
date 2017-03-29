@@ -47,7 +47,7 @@ Bot.on :message do |message|
   elsif fb_user.ungreeted?
     start_conversation(message, fb_user)
   elsif fb_user.not_located?
-    speak(PHRASES[:ask_location], TYPE_LOCATION)
+    start_conversation(message, fb_user)
   elsif
     case message.text
     when /hello/i
@@ -65,7 +65,7 @@ end
 
 def start_conversation(message, fb_user)
   update_user_profile(fb_user)
-  greet_user(fb_user, message.text)
+  greet_user(fb_user, message.text) # if fb_user.ungreeted?
   if fb_user.repeat_customer?
     display_choices(message, fb_user, PHRASES[:welcome_back])
   else

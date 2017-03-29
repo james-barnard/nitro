@@ -4,7 +4,7 @@ module ConversationHelper
     the_usual: 'If you are at: ',
     last4: 'and want to pay with card: ',
     thanks: 'Thanks for dropping by!',
-    welcome_back: 'It\'s good to see you again! Just click on the usual if you want the same brew from the same machine and pay with the same card.',
+    welcome_back: 'It\'s good to see you again! Just click on THE USUAL if you want the same brew from the same machine and pay with the same card.',
     just_chat: 'So, you just want to hang out and chat? Tell me what\'s on your mind.',
     ask_location: 'I would like to pour you some awesome coffee. Will you send me your location, please?',
     vm_address: 'It looks like you\'re at',
@@ -73,8 +73,14 @@ module ConversationHelper
 
   def greeting(fb_user, text)
     name = fb_user.first_name
+    puts "greeting:name: #{name}"
     prefix = GREETINGS[rand(GREETINGS.size)]
-    name.nil? ? prefix : prefix.insert(-2, " #{name}")
+    if name && prefix.include?(name)
+      prefix
+    else
+      puts "greeting:prefix: #{prefix}"
+      name.nil? ? prefix : prefix.insert(-2, " #{name}")
+    end
   end
 
   def prompt_for_the_usual(fb_user)
