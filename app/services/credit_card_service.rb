@@ -14,7 +14,7 @@ class CreditCardService
   end
 
   def create_customer
-    return nil if email.empty? && source.empty?
+    return nil if email.nil? || email.empty? && source.nil? || source.empty?
     @customer = external_customer_service.create(customer_attributes)
     @customer_id = customer.id
     @customer
