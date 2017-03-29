@@ -66,7 +66,7 @@ end
 def start_conversation(message, fb_user)
   update_user_profile(fb_user)
   greet_user(fb_user, message.text) # if fb_user.ungreeted?
-  if fb_user.repeat_customer?
+  if fb_user.repeat_customer? && false
     display_choices(message, fb_user, PHRASES[:welcome_back])
   else
     prompt_for_location(fb_user)
