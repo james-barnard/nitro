@@ -31,10 +31,10 @@ module MenuHelper
   end
 
   def mnu_element(title, product_load, fb_user)
-    puts "image_url: #{full_path(product_load.menu_thumb)}"
+    puts "image_url: #{product_load.menu_thumb}"
     {
       title:     title,
-      image_url: full_path(product_load.menu_thumb), # todo fix this for production
+      image_url: product_load.menu_thumb, # todo fix this for production
       default_action: default_action(product_load.id, fb_user)
     }
   end
