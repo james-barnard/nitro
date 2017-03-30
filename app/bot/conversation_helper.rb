@@ -37,7 +37,7 @@ module ConversationHelper
 
   THE_USUAL = [
     {
-      content_type: "postback",
+      content_type: "text",
       title:   "The Usual",
       payload: "THE_USUAL"
     },
