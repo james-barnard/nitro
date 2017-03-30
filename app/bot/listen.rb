@@ -9,6 +9,8 @@ REVERSE_API_URL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.fr
 
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
+attr_reader  :sender_id
+
 Bot.on :postback do |postback|
   puts "Postback received '#{postback.inspect}' from #{postback.sender}" # debug only
   @sender_id = postback.sender['id']
