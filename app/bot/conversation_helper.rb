@@ -62,7 +62,7 @@ module ConversationHelper
 
   def speak(text, quick_replies = nil)
     message_options = {
-    recipient: { id:   @sender_id },
+    recipient: { id:   sender_id },
     message:   { text: text       }
     }
 
