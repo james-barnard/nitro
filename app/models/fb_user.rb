@@ -11,7 +11,7 @@ class FbUser < ActiveRecord::Base
   end
 
   def repeat_customer?
-    purchases.present? && pos_machine_id && customer_id
+    purchases.present? && pos_machine_id && customer_id && last4
   end
 
   def not_located?

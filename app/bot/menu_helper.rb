@@ -31,10 +31,11 @@ module MenuHelper
   end
 
   def mnu_element(title, product_load, fb_user)
-    puts "image_url: #{product_load.menu_thumb}"
+    thumb_url = ENV['RACK_ENV'] == 'development' ? full_path(product_load.menu_thumb) : product_load.menu_thumb
+    puts "image_url: #{thumb_url}"
     {
       title:     title,
-      image_url: product_load.menu_thumb, # todo fix this for production
+      image_url: thumb_url,
       default_action: default_action(product_load.id, fb_user)
     }
   end

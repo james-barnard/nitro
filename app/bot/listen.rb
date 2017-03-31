@@ -63,14 +63,25 @@ Bot.on :message do |message|
   create_part(message.messaging["message"], fb_user)
 end
 
-def sender_id
+def sender_id(*dummy)
   @sender_id
+end
+
+def speak(text, quick_replies = nil)
+  message_options = {
+  recipient: { id:   sender_id },
+  message:   { text: text       }
+  }
+
+  message_options[:message][:quick_replies] = quick_replies if quick_replies
+
+  Bot.deliver(message_options, access_token: ENV['ACCESS_TOKEN'])
 end
 
 def start_conversation(message, fb_user)
   update_user_profile(fb_user)
   greet_user(fb_user, message.text) # if fb_user.ungreeted?
-  if fb_user.repeat_customer? && false
+  if fb_user.repeat_customer?
     display_choices(message, fb_user, PHRASES[:welcome_back])
   else
     prompt_for_location(fb_user)
