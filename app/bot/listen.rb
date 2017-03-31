@@ -68,6 +68,8 @@ def sender_id(*dummy)
 end
 
 def speak(text, quick_replies = nil)
+  puts "sender_id: #{sender_id}"
+  puts "accesstoken: #{ENV['ACCESS_TOKEN']}"
   message_options = {
   recipient: { id:   sender_id },
   message:   { text: text       }
